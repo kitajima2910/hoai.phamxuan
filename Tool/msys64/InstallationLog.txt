@@ -1,0 +1,84 @@
+************************************* Invoked: Thu Jun 1 22:06:23 2023
+[0] Arguments: E:\PXH\Downloads\msys2-x86_64-20220603.exe
+[6] Operations sanity check succeeded.
+[8] Language: en-US
+[10] Warning: QMimeDatabase: Error loading internal MIME data
+An error has been encountered at line 1 of <internal MIME data>: Premature end of document.:
+[365] Loaded control script ":/metadata/installer-config/control_js.js"
+[365] Using control script: ":/metadata/installer-config/control_js.js"
+[25412] Preparing meta information download...
+[123097] backup  operation: Mkdir
+[123097] 	- arguments: Z:/hoai.phamxuan/Tool/msys64
+[123097] Done
+[123097] perform  operation: Mkdir
+[123097] 	- arguments: Z:/hoai.phamxuan/Tool/msys64
+[123097] Done
+[123098] Preparing the installation...
+[123098] Install size: 2 components
+[123119] Installing component MSYS2 64bit base
+[123119] backup com.msys2.root.base operation: Extract
+[123119] 	- arguments: installer://com.msys2.root.base/20220603msys64.7z, Z:/hoai.phamxuan/Tool/msys64
+[123119] Done
+[123119] perform com.msys2.root.base operation: Extract
+[123119] 	- arguments: installer://com.msys2.root.base/20220603msys64.7z, Z:/hoai.phamxuan/Tool/msys64
+[144728] Done
+[144728] backup com.msys2.root.base operation: CreateShortcut
+[144728] 	- arguments: Z:/hoai.phamxuan/Tool/msys64\msys2_shell.cmd, C:\Users\Kitajima2910\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\MSYS2 64bit/MSYS2 MinGW x86.lnk, -mingw32, iconPath=Z:/hoai.phamxuan/Tool/msys64/mingw32.exe
+[144728] Done
+[144728] perform com.msys2.root.base operation: CreateShortcut
+[144728] 	- arguments: Z:/hoai.phamxuan/Tool/msys64\msys2_shell.cmd, C:\Users\Kitajima2910\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\MSYS2 64bit/MSYS2 MinGW x86.lnk, -mingw32
+[144776] Done
+[144776] backup com.msys2.root.base operation: CreateShortcut
+[144776] 	- arguments: Z:/hoai.phamxuan/Tool/msys64\msys2_shell.cmd, C:\Users\Kitajima2910\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\MSYS2 64bit/MSYS2 MinGW x64.lnk, -mingw64, iconPath=Z:/hoai.phamxuan/Tool/msys64/mingw64.exe
+[144776] Done
+[144777] perform com.msys2.root.base operation: CreateShortcut
+[144777] 	- arguments: Z:/hoai.phamxuan/Tool/msys64\msys2_shell.cmd, C:\Users\Kitajima2910\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\MSYS2 64bit/MSYS2 MinGW x64.lnk, -mingw64
+[144788] Done
+[144788] backup com.msys2.root.base operation: CreateShortcut
+[144788] 	- arguments: Z:/hoai.phamxuan/Tool/msys64\msys2_shell.cmd, C:\Users\Kitajima2910\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\MSYS2 64bit/MSYS2 MinGW UCRT x64.lnk, -ucrt64, iconPath=Z:/hoai.phamxuan/Tool/msys64/ucrt64.exe
+[144788] Done
+[144789] perform com.msys2.root.base operation: CreateShortcut
+[144789] 	- arguments: Z:/hoai.phamxuan/Tool/msys64\msys2_shell.cmd, C:\Users\Kitajima2910\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\MSYS2 64bit/MSYS2 MinGW UCRT x64.lnk, -ucrt64
+[144800] Done
+[144800] backup com.msys2.root.base operation: CreateShortcut
+[144800] 	- arguments: Z:/hoai.phamxuan/Tool/msys64\msys2_shell.cmd, C:\Users\Kitajima2910\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\MSYS2 64bit/MSYS2 MinGW Clang x64.lnk, -clang64, iconPath=Z:/hoai.phamxuan/Tool/msys64/clang64.exe
+[144800] Done
+[144800] perform com.msys2.root.base operation: CreateShortcut
+[144800] 	- arguments: Z:/hoai.phamxuan/Tool/msys64\msys2_shell.cmd, C:\Users\Kitajima2910\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\MSYS2 64bit/MSYS2 MinGW Clang x64.lnk, -clang64
+[144812] Done
+[144813] backup com.msys2.root.base operation: CreateShortcut
+[144813] 	- arguments: Z:/hoai.phamxuan/Tool/msys64\msys2_shell.cmd, C:\Users\Kitajima2910\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\MSYS2 64bit/MSYS2 MSYS.lnk, -msys, iconPath=Z:/hoai.phamxuan/Tool/msys64/msys2.exe
+[144813] Done
+[144813] perform com.msys2.root.base operation: CreateShortcut
+[144813] 	- arguments: Z:/hoai.phamxuan/Tool/msys64\msys2_shell.cmd, C:\Users\Kitajima2910\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\MSYS2 64bit/MSYS2 MSYS.lnk, -msys
+[144826] Done
+[144826] backup com.msys2.root.base operation: Execute
+[144827] 	- arguments: Z:/hoai.phamxuan/Tool/msys64\usr\bin\bash.exe, --login, -c, exit
+[144827] Done
+[144827] perform com.msys2.root.base operation: Execute
+[144827] 	- arguments: Z:/hoai.phamxuan/Tool/msys64\usr\bin\bash.exe, --login, -c, exit
+[144888] Z:/hoai.phamxuan/Tool/msys64\\usr\\bin\\bash.exe" started, arguments: "--login -c exit
+[146024] Copying skeleton files.\nThese files are for the users to personalise their msys2 experience.\n\nThey will never be overwritten nor automatically updated.\n\n
+[146095] './.bashrc' -> '/home/Kitajima2910/.bashrc'\n'./.bash_logout' -> '/home/Kitajima2910/.bash_logout'\n
+[146167] './.bash_profile' -> '/home/Kitajima2910/.bash_profile'\n
+[146178] './.inputrc' -> '/home/Kitajima2910/.inputrc'\n
+[146249] './.profile' -> '/home/Kitajima2910/.profile'\n
+[146402] 'C:\\Windows\\system32\\drivers\\etc\\hosts' -> '/etc/hosts'\n
+[146553] 'C:\\Windows\\system32\\drivers\\etc\\protocol' -> '/etc/protocols'\n
+[146625] 'C:\\Windows\\system32\\drivers\\etc\\services' -> '/etc/services'\n
+[146696] 'C:\\Windows\\system32\\drivers\\etc\\networks' -> '/etc/networks'\n
+[148033] ==> Generating pacman master key. This may take some time.\n
+[148668] ==> Updating trust database...\n
+[148820] ==> Appending keys from msys2.gpg...\n
+[150455] ==> Locally signing trusted keys in keyring...\n
+[150768]   -> Locally signed 5 keys.\n==> Importing owner trust values...\n
+[150799] ==> Disabling revoked keys in keyring...\n
+[151432]   -> Disabled 3 keys.\n==> Updating trust database...\n
+[205786] \x1B[H\x1B[2J\x1B[3J\n\n###################################################################\n#                                                                 #\n#                                                                 #\n#                   C   A   U   T   I   O   N                     #\n#                                                                 #\n#                  This is first start of MSYS2.                  #\n#       You MUST restart shell to apply necessary actions.        #\n#                                                                 #\n#                                                                 #\n###################################################################\n\n\n\x1B[H\x1B[2J\x1B[3J
+[205787] Done
+[205813] Writing maintenance tool: "Z:/hoai.phamxuan/Tool/msys64/uninstall.exe.new"
+[205813] Writing maintenance tool.
+[206271] Wrote permissions for maintenance tool.
+[206313] Maintenance tool hard restart: false.
+[206327] Installation finished!
+[217999] starting "Z:/hoai.phamxuan/Tool/msys64/msys2_shell.cmd" ()
