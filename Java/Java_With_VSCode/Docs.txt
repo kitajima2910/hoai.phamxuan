@@ -1,0 +1,2 @@
+- https://code.visualstudio.com/docs/java/java-tutorial
+- https://stackoverflow.com/questions/70149046/how-can-i-print-vietnamese-in-the-terminal-in-vs-code
