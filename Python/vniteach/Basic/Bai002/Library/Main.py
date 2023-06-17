@@ -1,5 +1,6 @@
 import math
-
+import numpy as np
+from decimal import Decimal
 
 STRING_INCORRECT: str = "The string you entered incorrect."
 
@@ -61,3 +62,17 @@ def calculate_circle_area(r: float):
     """
 
     return math.pi * r ** 2
+
+
+def the_distance_from_point_i_to_point_m(x: float, y: float, a: float, b: float):
+    """
+    Tính khoảng cách từ điểm I tới điểm M
+
+    :param x: float
+    :param y: float
+    :param a: float
+    :param b: float
+    :return: float
+    """
+
+    return math.sqrt((x - a) ** 2 + (y - b) ** 2)
