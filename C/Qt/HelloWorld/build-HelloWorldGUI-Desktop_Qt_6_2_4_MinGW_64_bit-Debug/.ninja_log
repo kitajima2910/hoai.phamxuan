@@ -1,0 +1,20 @@
+# ninja log v5
+2	36	0	Z:/hoai.phamxuan/C/Qt/HelloWorld/build-HelloWorldGUI-Desktop_Qt_6_2_4_MinGW_64_bit-Debug/CMakeFiles/cmake.verify_globs	5fdb26cecd992a5f
+1	707	7089827728574756	HelloWorldGUI_autogen/timestamp	3e8deb068a65e1d7
+1	707	7089827728574756	HelloWorldGUI_autogen/mocs_compilation.cpp	3e8deb068a65e1d7
+1	707	7089827728574756	Z:/hoai.phamxuan/C/Qt/HelloWorld/build-HelloWorldGUI-Desktop_Qt_6_2_4_MinGW_64_bit-Debug/HelloWorldGUI_autogen/timestamp	3e8deb068a65e1d7
+1	707	7089827728574756	Z:/hoai.phamxuan/C/Qt/HelloWorld/build-HelloWorldGUI-Desktop_Qt_6_2_4_MinGW_64_bit-Debug/HelloWorldGUI_autogen/mocs_compilation.cpp	3e8deb068a65e1d7
+707	2709	7089827750033799	CMakeFiles/HelloWorldGUI.dir/HelloWorldGUI_autogen/mocs_compilation.cpp.obj	a40d1c1ab3d12bd0
+717	2895	7089827751882926	CMakeFiles/HelloWorldGUI.dir/main.cpp.obj	dfc013b5d4bdb27e
+712	3066	7089827753601925	CMakeFiles/HelloWorldGUI.dir/mainwindow.cpp.obj	8bd43ad6015f17ce
+3067	3284	7089827755705293	HelloWorldGUI.exe	dd4676085912c56f
+2	32	0	Z:/hoai.phamxuan/C/Qt/HelloWorld/build-HelloWorldGUI-Desktop_Qt_6_2_4_MinGW_64_bit-Debug/CMakeFiles/cmake.verify_globs	5fdb26cecd992a5f
+18	717	7089828639210759	HelloWorldGUI_autogen/timestamp	3e8deb068a65e1d7
+18	717	7089828639210759	HelloWorldGUI_autogen/mocs_compilation.cpp	3e8deb068a65e1d7
+18	717	7089828639210759	Z:/hoai.phamxuan/C/Qt/HelloWorld/build-HelloWorldGUI-Desktop_Qt_6_2_4_MinGW_64_bit-Debug/HelloWorldGUI_autogen/timestamp	3e8deb068a65e1d7
+18	717	7089828639210759	Z:/hoai.phamxuan/C/Qt/HelloWorld/build-HelloWorldGUI-Desktop_Qt_6_2_4_MinGW_64_bit-Debug/HelloWorldGUI_autogen/mocs_compilation.cpp	3e8deb068a65e1d7
+718	3037	7089828664146516	CMakeFiles/HelloWorldGUI.dir/HelloWorldGUI_autogen/mocs_compilation.cpp.obj	a40d1c1ab3d12bd0
+723	3326	7089828667025001	CMakeFiles/HelloWorldGUI.dir/main.cpp.obj	dfc013b5d4bdb27e
+729	3565	7089828669429485	CMakeFiles/HelloWorldGUI.dir/mainwindow.cpp.obj	8bd43ad6015f17ce
+3565	3784	7089828671530042	HelloWorldGUI.exe	dd4676085912c56f
+1	30	0	Z:/hoai.phamxuan/C/Qt/HelloWorld/build-HelloWorldGUI-Desktop_Qt_6_2_4_MinGW_64_bit-Debug/CMakeFiles/cmake.verify_globs	5fdb26cecd992a5f
