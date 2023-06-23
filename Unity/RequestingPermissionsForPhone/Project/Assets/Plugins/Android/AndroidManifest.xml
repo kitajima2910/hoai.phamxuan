@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.unity3d.player"
+    xmlns:tools="http://schemas.android.com/tools">
+
+  <!-- Without this entry the folders will remain in-accessible in Android-10, even if WRITE_EXTERNAL_STORAGE as above is present. -->
+  <application android:requestLegacyExternalStorage="true">
+
+    <!-- START: Thêm vào để hiện thông báo -->
+    <meta-data android:name="unityplayer.SkipPermissionsDialog" android:value="true" />
+    <!-- END -->
+
+    <activity android:name="com.unity3d.player.UnityPlayerActivity"
+              android:theme="@style/UnityThemeSelector">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+      </intent-filter>
+      <meta-data android:name="unityplayer.UnityActivity" android:value="true" />
+    </activity>
+  </application>
+
+  <uses-permission android:name="android.permission.CAMERA" />
+  <uses-permission android:name="android.permission.RECORD_AUDIO" />
+  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+  <!-- START: Không còn trong API 33, dưới 33 sẽ hiện: Allow <name app> to access photos, videos, music, and audio on this device -->
+  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+  <!-- END -->
+  
+  <!-- START: Build API 33, Không còn dùng READ_EXTERNAL_STORAGE -->
+  <!-- READ_MEDIA_IMAGES & READ_MEDIA_VIDEO sẽ hiện: Allow <name app> to access photos and videos on this device? -->
+  <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" android:minSdkVersion="33" />
+  <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" android:minSdkVersion="33" />
+  <!-- READ_MEDIA_IMAGES & READ_MEDIA_VIDEO sẽ hiện: Allow <name app> to access photos and videos on this device? -->
+
+  <!-- READ_MEDIA_AUDIO sẽ hiện: Allow <name app> to access music and audio on this device? -->
+  <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" android:minSdkVersion="33" />
+  <!-- READ_MEDIA_AUDIO sẽ hiện: Allow <name app> to access music and audio on this device? -->
+  <!-- END -->
+
+  <!-- Without this entry storage-permission entry will not be visible under app-info permissions list Android-10 and below -->
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" 
+                   android:maxSdkVersion="29" tools:ignore="ScopedStorage" />
+
+  <!-- START: API 33 -->
+  <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+  <!-- END -->
+</manifest>
