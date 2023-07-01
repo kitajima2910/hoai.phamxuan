@@ -1,0 +1,119 @@
+# =============== #
+# Unity generated #
+# =============== #
+
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Bb]uild/
+/[Bb]uilds/
+/[Ll]ogs/
+/[Uu]ser[Ss]ettings/
+/[Ss]tateCache/
+# /[Pp]ackages/
+/[Ii]mportSettings.asset
+# /ProjectSettings/ProjectVersion.txt
+/ProjectSettings/UnityConnectSettings.asset
+
+# ===================================== #
+# Visual Studio / MonoDevelop generated #
+# ===================================== #
+
+# /[Aa]ssets/Plugins/
+/[Aa]ssets/[Ss]cripts/[Aa]ssembly-[Cc]Sharp-[Ee]ditor[Oo]nly/
+/*.sln
+/*.suo
+/*.csproj
+/*.unityproj
+/*.userprefs
+/*.pidb
+/*.booproj
+/*.sln.DotSettings.user
+/*.suo.DotSettings.user
+/*.user
+
+# ========================== #
+# Build artifacts and caches #
+# ========================== #
+
+/[Bb]uild/[Ww]eb/
+/[Bb]uild/[Ww]ebGL/
+/[Bb]uild/[Ss]tandalone[Ss]upport/
+/[Bb]uild/[Aa]ndroid/
+/[Bb]uild/[Ii]OS/
+/[Bb]uild/[Tt]v[Oo]S/
+/[Bb]uild/[Xx]code/
+/[Bb]uild/[Ww]indows[Ss]tore[8-9]/
+/[Bb]uild/[Ww]indows[Ss]tore[8-9]Apps/
+/[Bb]uild/[Mm]etro[ -][Aa]pp/
+/[Bb]uild/[Mm]etro[ -][Aa]pp[Dd]esigner/
+/[Bb]uild/[Cc]ache/
+/[Bb]uild/[Pp]reloaded[Oo]bjs/
+
+# ======================= #
+# Play mode and test logs #
+# ======================= #
+
+/[Ll]ogs/
+/[Tt]est[Rr]esults/
+/[Tt]est[Rr]esults/[Ll]ogs/
+/[Bb]uild/[Ll]ogs/
+
+# ==================== #
+# Visual Studio Code   #
+# ==================== #
+
+/.vscode/
+/.vs/
+
+# ================= #
+# macOS specific    #
+# ================= #
+
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# =================== #
+# JetBrains Rider     #
+# =================== #
+
+.idea/
+.Rider/
+/*.iml
+
+# ======================== #
+# Rider for Unreal Engine #
+# ======================== #
+
+.rider/
+
+# ==================== #
+# Gradle Wrapper       #
+# ==================== #
+
+/gradle/
+/gradlew
+/gradlew.bat
+
+# ==================== #
+# Android specific     #
+# ==================== #
+
+/*/build/
+/*/local.properties
+/*/local.properties.*
+/*/project.properties
+/unityLibrary/
+/*.apk
+/*.aar
+/.gradle/
+/captures/
+/gradle/
+/gradlew
+/gradlew.bat
+
+# ==================== #
+# Customize			   #
+# ==================== #
+/BuildAPK
