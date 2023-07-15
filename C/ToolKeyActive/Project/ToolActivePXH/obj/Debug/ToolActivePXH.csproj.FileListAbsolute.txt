@@ -1,0 +1,10 @@
+Z:\hoai.phamxuan\C\ToolKeyActive\Project\ToolActivePXH\bin\Debug\ToolActivePXH.exe.config
+Z:\hoai.phamxuan\C\ToolKeyActive\Project\ToolActivePXH\bin\Debug\ToolActivePXH.exe
+Z:\hoai.phamxuan\C\ToolKeyActive\Project\ToolActivePXH\bin\Debug\ToolActivePXH.pdb
+Z:\hoai.phamxuan\C\ToolKeyActive\Project\ToolActivePXH\obj\Debug\ToolActivePXH.Properties.Resources.resources
+Z:\hoai.phamxuan\C\ToolKeyActive\Project\ToolActivePXH\obj\Debug\ToolActivePXH.csproj.GenerateResource.cache
+Z:\hoai.phamxuan\C\ToolKeyActive\Project\ToolActivePXH\obj\Debug\ToolActivePXH.csproj.CoreCompileInputs.cache
+Z:\hoai.phamxuan\C\ToolKeyActive\Project\ToolActivePXH\obj\Debug\ToolActivePXH.exe
+Z:\hoai.phamxuan\C\ToolKeyActive\Project\ToolActivePXH\obj\Debug\ToolActivePXH.pdb
+Z:\hoai.phamxuan\C\ToolKeyActive\Project\ToolActivePXH\obj\Debug\ToolActivePXH.frmMain.resources
+Z:\hoai.phamxuan\C\ToolKeyActive\Project\ToolActivePXH\obj\Debug\ToolActivePXH.csproj.AssemblyReference.cache

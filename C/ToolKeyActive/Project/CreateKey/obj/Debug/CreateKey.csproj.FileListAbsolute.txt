@@ -1,0 +1,10 @@
+Z:\hoai.phamxuan\C\ToolKeyActive\Project\CreateKey\bin\Debug\CreateKey.exe.config
+Z:\hoai.phamxuan\C\ToolKeyActive\Project\CreateKey\bin\Debug\CreateKey.exe
+Z:\hoai.phamxuan\C\ToolKeyActive\Project\CreateKey\bin\Debug\CreateKey.pdb
+Z:\hoai.phamxuan\C\ToolKeyActive\Project\CreateKey\obj\Debug\CreateKey.csproj.AssemblyReference.cache
+Z:\hoai.phamxuan\C\ToolKeyActive\Project\CreateKey\obj\Debug\CreateKey.Properties.Resources.resources
+Z:\hoai.phamxuan\C\ToolKeyActive\Project\CreateKey\obj\Debug\CreateKey.csproj.GenerateResource.cache
+Z:\hoai.phamxuan\C\ToolKeyActive\Project\CreateKey\obj\Debug\CreateKey.csproj.CoreCompileInputs.cache
+Z:\hoai.phamxuan\C\ToolKeyActive\Project\CreateKey\obj\Debug\CreateKey.exe
+Z:\hoai.phamxuan\C\ToolKeyActive\Project\CreateKey\obj\Debug\CreateKey.pdb
+Z:\hoai.phamxuan\C\ToolKeyActive\Project\CreateKey\obj\Debug\CreateKey.frmMain.resources
