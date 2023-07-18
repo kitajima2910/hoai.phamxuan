@@ -1,0 +1,15 @@
+Z:\hoai.phamxuan\C\Selenium\Project\upanh.org\bin\Debug\selenium-manager\linux\selenium-manager
+Z:\hoai.phamxuan\C\Selenium\Project\upanh.org\bin\Debug\selenium-manager\macos\selenium-manager
+Z:\hoai.phamxuan\C\Selenium\Project\upanh.org\bin\Debug\selenium-manager\windows\selenium-manager.exe
+Z:\hoai.phamxuan\C\Selenium\Project\upanh.org\bin\Debug\upanh.org.exe.config
+Z:\hoai.phamxuan\C\Selenium\Project\upanh.org\bin\Debug\upanh.org.exe
+Z:\hoai.phamxuan\C\Selenium\Project\upanh.org\bin\Debug\upanh.org.pdb
+Z:\hoai.phamxuan\C\Selenium\Project\upanh.org\bin\Debug\WebDriver.dll
+Z:\hoai.phamxuan\C\Selenium\Project\upanh.org\obj\Debug\upanh.org.csproj.AssemblyReference.cache
+Z:\hoai.phamxuan\C\Selenium\Project\upanh.org\obj\Debug\upanh.org.frmMain.resources
+Z:\hoai.phamxuan\C\Selenium\Project\upanh.org\obj\Debug\upanh.org.Properties.Resources.resources
+Z:\hoai.phamxuan\C\Selenium\Project\upanh.org\obj\Debug\upanh.org.csproj.GenerateResource.cache
+Z:\hoai.phamxuan\C\Selenium\Project\upanh.org\obj\Debug\upanh.org.csproj.CoreCompileInputs.cache
+Z:\hoai.phamxuan\C\Selenium\Project\upanh.org\obj\Debug\upanh.org.csproj.CopyComplete
+Z:\hoai.phamxuan\C\Selenium\Project\upanh.org\obj\Debug\upanh.org.exe
+Z:\hoai.phamxuan\C\Selenium\Project\upanh.org\obj\Debug\upanh.org.pdb

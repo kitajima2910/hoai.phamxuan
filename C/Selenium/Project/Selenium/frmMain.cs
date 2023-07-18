@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using OpenQA.Selenium;
@@ -49,6 +50,26 @@ namespace Selenium
             {
 
             }
+        }
+
+        private void btn03_Click(object sender, EventArgs e)
+        {
+            // Ẩn CMD
+            ChromeDriverService chromeDriverService = ChromeDriverService.CreateDefaultService();
+            chromeDriverService.HideCommandPromptWindow = true;
+
+            IWebDriver driver = new ChromeDriver(chromeDriverService);
+            driver.Url = "https://katalon-demo-cura.herokuapp.com/profile.php#login";
+            driver.Navigate();
+
+            IWebElement username = driver.FindElement(By.Name("username"));
+            IWebElement password = driver.FindElement(By.Name("password"));
+            IWebElement btnLogin = driver.FindElement(By.Id("btn-login"));
+
+            username.SendKeys("hoai.phamxuan");
+            password.SendKeys("123456");
+            Thread.Sleep(2000);
+            btnLogin.Click();
         }
     }
 }

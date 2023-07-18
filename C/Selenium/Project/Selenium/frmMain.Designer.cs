@@ -33,6 +33,7 @@ namespace Selenium
             this.btnOpenBrowser02 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.txtUrl = new System.Windows.Forms.TextBox();
+            this.btn03 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnOpenBrowser
@@ -72,12 +73,25 @@ namespace Selenium
             this.txtUrl.Name = "txtUrl";
             this.txtUrl.Size = new System.Drawing.Size(345, 22);
             this.txtUrl.TabIndex = 3;
+            this.txtUrl.TabStop = false;
+            // 
+            // btn03
+            // 
+            this.btn03.Location = new System.Drawing.Point(12, 131);
+            this.btn03.Name = "btn03";
+            this.btn03.Size = new System.Drawing.Size(430, 52);
+            this.btn03.TabIndex = 4;
+            this.btn03.TabStop = false;
+            this.btn03.Text = "Test 03: https://katalon-demo-cura.herokuapp.com/profile.php#login";
+            this.btn03.UseVisualStyleBackColor = true;
+            this.btn03.Click += new System.EventHandler(this.btn03_Click);
             // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(454, 231);
+            this.Controls.Add(this.btn03);
             this.Controls.Add(this.txtUrl);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnOpenBrowser02);
@@ -100,6 +114,7 @@ namespace Selenium
         private System.Windows.Forms.Button btnOpenBrowser02;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtUrl;
+        private System.Windows.Forms.Button btn03;
     }
 }
 
