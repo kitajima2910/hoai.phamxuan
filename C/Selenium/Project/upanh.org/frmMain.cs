@@ -51,6 +51,7 @@ namespace upanh.org
         }
         #endregion
 
+        private Thread threadMarquee = default;
         private int i = 1;
 
         public frmMain()
@@ -70,26 +71,11 @@ namespace upanh.org
 
         private void frmMain_Load(object sender, EventArgs e)
         {
-            //Thread thread = new Thread(Marquee);
-            //thread.Start();
-
-            //tMarquee.Start();
+            
+            tMarquee.Start();
 
             SetPadding(txtShowPath, new Padding(5, 5, 5, 5));
             SetPadding(txtResultUrl, new Padding(5, 5, 5, 5));
-        }
-
-        private void Marquee()
-        {
-            while(true)
-            {
-                lMarquee.Left += i;
-                if (lMarquee.Left >= (this.Size.Width - lMarquee.Size.Width - 25) || lMarquee.Left <= 10)
-                {
-                    i = -i;
-                }
-                Thread.Sleep(10);
-            }
         }
 
         private static string GetImageFilter()
@@ -112,21 +98,32 @@ namespace upanh.org
 
         private void tMarquee_Tick(object sender, EventArgs e)
         {
-            lMarquee.Left += i;
-            if (lMarquee.Left >= (this.Size.Width - lMarquee.Size.Width - 25) || lMarquee.Left <= 10)
-            {
-                i = -i;
-            }
+            threadMarquee = new Thread(() => {
+                Invoke(new Action(() => {
+
+                    lMarquee.Left += i;
+                    if (lMarquee.Left >= (this.Size.Width - lMarquee.Size.Width - 25) || lMarquee.Left <= 10)
+                    {
+                        i = -i;
+                    }
+
+                }));
+            });
+            threadMarquee.IsBackground = true;
+            threadMarquee.Start();
         }
 
         private void btnUpload_Click(object sender, EventArgs e)
         {
             if(txtShowPath.Text.Trim().Length > 0)
             {
-                //Thread thread = new Thread(Upload);
-                //thread.Start();
+                Thread thread = new Thread(() =>
+                {
+                    Upload();
 
-                Upload();
+                });
+                thread.IsBackground = true;
+                thread.Start();
             }
             else
             {
@@ -160,10 +157,15 @@ namespace upanh.org
             Thread.Sleep(5000);
             selectCodeEmbed.SelectByText("Link trực tiếp");
 
-            // Copy
-            IWebElement copyLink = driver.FindElement(By.Id("uploaded-embed-code-1"));
-            Thread.Sleep(2000);
-            txtResultUrl.Text = copyLink.GetAttribute("value");
+            Invoke(new Action(() => {
+
+                // Copy
+                IWebElement copyLink = driver.FindElement(By.Id("uploaded-embed-code-1"));
+                Thread.Sleep(2000);
+                txtResultUrl.Text = copyLink.GetAttribute("value");
+
+            }));
+
         }
 
         private void txtResultUrl_TextChanged(object sender, EventArgs e)
@@ -176,6 +178,16 @@ namespace upanh.org
             {
                 btnUpload.Enabled = true;
             }
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            if(threadMarquee.IsAlive)
+            {
+                threadMarquee.Abort();
+            }
+
+            base.OnClosing(e);
         }
     }
 }

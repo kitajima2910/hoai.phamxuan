@@ -110,7 +110,7 @@ namespace upanh.org
             this.txtResultUrl.Multiline = true;
             this.txtResultUrl.Name = "txtResultUrl";
             this.txtResultUrl.ReadOnly = true;
-            this.txtResultUrl.Size = new System.Drawing.Size(231, 39);
+            this.txtResultUrl.Size = new System.Drawing.Size(231, 140);
             this.txtResultUrl.TabIndex = 6;
             this.txtResultUrl.TabStop = false;
             this.txtResultUrl.TextChanged += new System.EventHandler(this.txtResultUrl_TextChanged);
@@ -118,7 +118,7 @@ namespace upanh.org
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(194, 130);
+            this.label1.Location = new System.Drawing.Point(194, 229);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(234, 17);
             this.label1.TabIndex = 7;
@@ -142,7 +142,7 @@ namespace upanh.org
             this.Name = "frmMain";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Tự động tải ảnh lên anhsieuviet.com - PXH";
+            this.Text = "Tự động tải ảnh lên web -  PXH";
             this.Load += new System.EventHandler(this.frmMain_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pbShow)).EndInit();
             this.ResumeLayout(false);
