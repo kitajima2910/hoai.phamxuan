@@ -1,0 +1,13 @@
+Z:\hoai.phamxuan\C\ProjectsPXH\Projects\RSA\bin\Debug\RSA.exe.config
+Z:\hoai.phamxuan\C\ProjectsPXH\Projects\RSA\bin\Debug\RSA.exe
+Z:\hoai.phamxuan\C\ProjectsPXH\Projects\RSA\bin\Debug\RSA.pdb
+Z:\hoai.phamxuan\C\ProjectsPXH\Projects\RSA\obj\Debug\RSA.csproj.AssemblyReference.cache
+Z:\hoai.phamxuan\C\ProjectsPXH\Projects\RSA\obj\Debug\RSA.frmMain.resources
+Z:\hoai.phamxuan\C\ProjectsPXH\Projects\RSA\obj\Debug\RSA.Properties.Resources.resources
+Z:\hoai.phamxuan\C\ProjectsPXH\Projects\RSA\obj\Debug\RSA.csproj.GenerateResource.cache
+Z:\hoai.phamxuan\C\ProjectsPXH\Projects\RSA\obj\Debug\RSA.csproj.CoreCompileInputs.cache
+Z:\hoai.phamxuan\C\ProjectsPXH\Projects\RSA\obj\Debug\RSA.exe
+Z:\hoai.phamxuan\C\ProjectsPXH\Projects\RSA\obj\Debug\RSA.pdb
+Z:\hoai.phamxuan\C\ProjectsPXH\Projects\RSA\bin\Debug\BouncyCastle.Cryptography.dll
+Z:\hoai.phamxuan\C\ProjectsPXH\Projects\RSA\bin\Debug\BouncyCastle.Cryptography.xml
+Z:\hoai.phamxuan\C\ProjectsPXH\Projects\RSA\obj\Debug\RSA.csproj.CopyComplete
