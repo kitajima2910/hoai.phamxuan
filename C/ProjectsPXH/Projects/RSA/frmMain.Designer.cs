@@ -82,7 +82,6 @@ namespace RSA
             this.txtPrivateKey.Location = new System.Drawing.Point(15, 101);
             this.txtPrivateKey.Multiline = true;
             this.txtPrivateKey.Name = "txtPrivateKey";
-            this.txtPrivateKey.ReadOnly = true;
             this.txtPrivateKey.Size = new System.Drawing.Size(476, 178);
             this.txtPrivateKey.TabIndex = 1;
             this.txtPrivateKey.TabStop = false;
@@ -93,7 +92,6 @@ namespace RSA
             this.txtPublicKey.Location = new System.Drawing.Point(507, 101);
             this.txtPublicKey.Multiline = true;
             this.txtPublicKey.Name = "txtPublicKey";
-            this.txtPublicKey.ReadOnly = true;
             this.txtPublicKey.Size = new System.Drawing.Size(476, 178);
             this.txtPublicKey.TabIndex = 1;
             this.txtPublicKey.TabStop = false;
@@ -214,7 +212,6 @@ namespace RSA
             this.txtContentEncrypt.Location = new System.Drawing.Point(15, 594);
             this.txtContentEncrypt.Multiline = true;
             this.txtContentEncrypt.Name = "txtContentEncrypt";
-            this.txtContentEncrypt.ReadOnly = true;
             this.txtContentEncrypt.Size = new System.Drawing.Size(476, 93);
             this.txtContentEncrypt.TabIndex = 3;
             this.txtContentEncrypt.TabStop = false;

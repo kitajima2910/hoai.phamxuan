@@ -89,7 +89,7 @@ namespace RSA
             txtContent.ScrollBars = ScrollBars.Vertical;
             txtContentEncrypt.ScrollBars = ScrollBars.Vertical;
             txtResult.ScrollBars = ScrollBars.Vertical;
-            btnDecryption.Enabled = false;
+            btnDecryption.Enabled = true;
             btnSavePrivateKey.Enabled = false;
             btnSavePublicKey.Enabled = false;
             btnPrivatePEM.Enabled = false;
