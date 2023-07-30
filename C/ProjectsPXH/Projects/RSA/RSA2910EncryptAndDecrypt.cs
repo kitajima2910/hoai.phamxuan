@@ -13,13 +13,23 @@ namespace RSA
 {
     class RSA2910EncryptAndDecrypt
     {
-        public static string RsaEncryptWithPublic(string clearText, string publicKey)
+        public static string RsaEncryptWithPublic(string contentText, string publicKey)
         {
-            var bytesToEncrypt = Encoding.UTF8.GetBytes(clearText);
+            var publicKeyClone = string.Empty;
+            if (!(publicKey.Contains("-----BEGIN PUBLIC KEY-----") && publicKey.Contains("-----END PUBLIC KEY-----")))
+            {
+                publicKeyClone = "-----BEGIN PUBLIC KEY-----" + publicKey + "-----END PUBLIC KEY-----";
+            }
+            else
+            {
+                publicKeyClone = publicKey;
+            }
+
+            var bytesToEncrypt = Encoding.UTF8.GetBytes(contentText);
 
             var encryptEngine = new Pkcs1Encoding(new RsaEngine());
 
-            using (var txtreader = new StringReader(publicKey))
+            using (var txtreader = new StringReader(publicKeyClone))
             {
                 var keyParameter = (AsymmetricKeyParameter)new PemReader(txtreader).ReadObject();
 
@@ -33,11 +43,21 @@ namespace RSA
 
         public static string RsaDecryptWithPrivate(string base64Input, string privateKey)
         {
+            var privateKeyClone = string.Empty;
+            if (!(privateKey.Contains("-----BEGIN PRIVATE KEY-----") && privateKey.Contains("-----END PRIVATE KEY-----")))
+            {
+                privateKeyClone = "-----BEGIN PRIVATE KEY-----" + privateKey + "-----END PRIVATE KEY-----";
+            }
+            else
+            {
+                privateKeyClone = privateKey;
+            }
+
             var bytesToDecrypt = Convert.FromBase64String(base64Input);
 
             var decryptEngine = new Pkcs1Encoding(new RsaEngine());
 
-            using (var txtreader = new StringReader(privateKey))
+            using (var txtreader = new StringReader(privateKeyClone))
             {
                 var keyParameter = (AsymmetricKeyParameter)new PemReader(txtreader).ReadObject();
 

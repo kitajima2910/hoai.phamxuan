@@ -12,3 +12,4 @@ Z:\hoai.phamxuan\C\ProjectsPXH\Projects\RSA\bin\Debug\BouncyCastle.Cryptography.
 Z:\hoai.phamxuan\C\ProjectsPXH\Projects\RSA\bin\Debug\BouncyCastle.Cryptography.xml
 Z:\hoai.phamxuan\C\ProjectsPXH\Projects\RSA\obj\Debug\RSA.csproj.CopyComplete
 Z:\hoai.phamxuan\C\ProjectsPXH\Projects\RSA\bin\Debug\Guna.UI2.dll
+Z:\hoai.phamxuan\C\ProjectsPXH\Projects\RSA\obj\Debug\RSA.frmMainV2.resources
