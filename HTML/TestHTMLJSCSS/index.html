@@ -2,27 +2,34 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title></title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
 </head>
 
 <body>
-  <div class="gamepad">
-    <div class="buttons">
-      <button id="button-up" class="button"></button>
-      <button id="button-left" class="button"></button>
-      <button id="button-right" class="button"></button>
-      <button id="button-down" class="button"></button>
-    </div>
-    <div class="joysticks">
-      <div id="left-joystick" class="joystick"></div>
-      <div id="right-joystick" class="joystick"></div>
-    </div>
-  </div>
+    <canvas id="myCanvas" style="position: absolute; left: 0; top: 0; border: solid 1px #000;" width="900"
+        height="500"></canvas>
+    <script>
 
-  <script src="./script.js"></script>
+        var canva = document.getElementById("myCanvas");
+        var ctx = canva.getContext("2d");
+
+        var img = new Image();
+        img.src = "btn-click-me.png";
+
+        img.onload = function () {
+            ctx.drawImage(img, 20, 20, 200, 100);
+        }
+
+        console.log(ctx);
+        img.addEventListener('click', function() { 
+            console.log("aaaaaa")
+        }, false);
+
+        // img.a
+
+    </script>
 </body>
 
 </html>
