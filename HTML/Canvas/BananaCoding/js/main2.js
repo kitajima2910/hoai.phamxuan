@@ -9,8 +9,6 @@ canvas.height = window_height;
 
 canvas.style.backgroundColor = "#ff8";
 
-let hit_counter = 0;
-
 class Circle {
 
     constructor(xpos, ypos, radius, color, text, speed) {
@@ -42,29 +40,23 @@ class Circle {
     }
 
     update() {
-        this.text = hit_counter;
 
-        context.clearRect(0, 0, window_width, window_height);
         this.draw(context);
 
         if((this.xpos + this.radius) > window_width) {
             this.dx = -this.dx;
-            hit_counter++;
         }
 
         if((this.xpos - this.radius) < 0) {
             this.dx = -this.dx;
-            hit_counter++;
         }
 
         if((this.ypos + this.radius) > window_height) {
             this.dy = -this.dy;
-            hit_counter++;
         }
 
         if((this.ypos - this.radius) < 0) {
             this.dy = -this.dy;
-            hit_counter++;
         }
 
         this.xpos += this.dx;
@@ -72,17 +64,30 @@ class Circle {
     }
 }
 
+let getDistance = function(xpos1, ypos1, xpos2, ypos2) {
+    return Math.sqrt((xpos2 - xpos1) ** 2 + (ypos2 - ypos1) ** 2);
+}
 
-let my_circle = new Circle(100, 100, 50, "black", hit_counter, 2);
-my_circle.draw(context);
+let my_circle1 = new Circle(500, 800, 50, "black", "A", 2);
+let my_circle2 = new Circle(300, 300, 200, "black", "B", 0);
+my_circle1.draw(context);
+my_circle2.draw(context);
 
 let updateCircle = function() {
-    my_circle.update();
+    context.clearRect(0, 0, window_width, window_height);
+    my_circle1.update();
+    my_circle2.update();
+
+    if(getDistance(my_circle1.xpos, my_circle1.ypos, my_circle2.xpos, my_circle2.ypos) < (my_circle2.radius + my_circle1.radius)) {
+        my_circle2.color = "red";
+    } else {
+        my_circle2.color = "black";
+    }
+
     requestAnimationFrame(updateCircle);
 }
 
 requestAnimationFrame(updateCircle);
-
 // for(let number = 0; number < 1; number++) {
 //     let random_x = Math.random() * window_width;
 //     let random_y = Math.random() * window_height;
