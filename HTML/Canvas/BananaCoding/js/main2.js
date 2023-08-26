@@ -68,21 +68,33 @@ let getDistance = function(xpos1, ypos1, xpos2, ypos2) {
     return Math.sqrt((xpos2 - xpos1) ** 2 + (ypos2 - ypos1) ** 2);
 }
 
-let my_circle1 = new Circle(500, 800, 50, "black", "A", 2);
-let my_circle2 = new Circle(300, 300, 200, "black", "B", 0);
-my_circle1.draw(context);
-my_circle2.draw(context);
+let all_circles = [];
+
+let randomNumber = function(min, max) {
+    return Math.random() * (max - min) + min;
+}
+
+for(let i = 0; i < 10; i++) {
+    let radius = 50;
+    let random_x = randomNumber(radius, window_width - radius);
+    let random_y = randomNumber(radius, window_height - radius);
+
+    let my_circle = new Circle(random_x, random_y, radius, "black", "A", 2);
+    all_circles.push(my_circle);
+}
 
 let updateCircle = function() {
     context.clearRect(0, 0, window_width, window_height);
-    my_circle1.update();
-    my_circle2.update();
+    
+    all_circles.forEach((element) => {
+        element.update();
+    });
 
-    if(getDistance(my_circle1.xpos, my_circle1.ypos, my_circle2.xpos, my_circle2.ypos) < (my_circle2.radius + my_circle1.radius)) {
-        my_circle2.color = "red";
-    } else {
-        my_circle2.color = "black";
-    }
+    // if(getDistance(my_circle1.xpos, my_circle1.ypos, my_circle2.xpos, my_circle2.ypos) < (my_circle2.radius + my_circle1.radius)) {
+    //     my_circle2.color = "red";
+    // } else {
+    //     my_circle2.color = "black";
+    // }
 
     requestAnimationFrame(updateCircle);
 }
