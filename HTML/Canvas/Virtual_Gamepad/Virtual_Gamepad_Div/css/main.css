@@ -1,0 +1,78 @@
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    width: 100%;
+    height: calc(100% - 50px);
+    overflow: hidden;
+}
+
+body {
+    position: relative;
+    background-color: aquamarine;
+}
+
+body { min-height:540px; }     
+body[orient="portrait"] { min-height:540px; }
+body[orient="landscape"] { min-height:400px; }
+
+/* Start: Commons */
+.btn-action {
+    width: 50px;
+    height: 50px;
+}
+
+/* End: Commons */
+
+/* @media (orientation: portrait) { */
+
+/* Start: CSS Button Action */
+.btn-action {
+    rotate: 90deg;
+}
+
+.btn-action.a {
+    position: absolute;
+    left: 10%;
+    bottom: 10%;
+}
+
+.btn-action.b {
+    position: absolute;
+    left: 24%;
+    bottom: 2%;
+}
+
+.btn-action.x {
+    position: absolute;
+    left: 24%;
+    bottom: 18%;
+}
+
+.btn-action.y {
+    position: absolute;
+    left: 40%;
+    bottom: 10%;
+}
+
+/* End: CSS Button Action */
+/* } */
+
+@media (orientation: landscape) {
+    html {
+        transform: rotate(-90deg);
+        transform-origin: left top;
+        width: 100vh;
+        height: 100vw;
+        overflow-x: hidden;
+        position: absolute;
+        top: 100%;
+        left: 0;
+    }
+}

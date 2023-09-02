@@ -1,0 +1,7 @@
+Z:\hoai.phamxuan\Real-time\ParametricCamp\ParametricCamp\LocalServer\bin\Debug\LocalServer.exe.config
+Z:\hoai.phamxuan\Real-time\ParametricCamp\ParametricCamp\LocalServer\bin\Debug\LocalServer.exe
+Z:\hoai.phamxuan\Real-time\ParametricCamp\ParametricCamp\LocalServer\bin\Debug\LocalServer.pdb
+Z:\hoai.phamxuan\Real-time\ParametricCamp\ParametricCamp\LocalServer\obj\Debug\LocalServer.csproj.CoreCompileInputs.cache
+Z:\hoai.phamxuan\Real-time\ParametricCamp\ParametricCamp\LocalServer\obj\Debug\LocalServer.exe
+Z:\hoai.phamxuan\Real-time\ParametricCamp\ParametricCamp\LocalServer\obj\Debug\LocalServer.pdb
+Z:\hoai.phamxuan\Real-time\ParametricCamp\ParametricCamp\LocalServer\obj\Debug\LocalServer.csproj.AssemblyReference.cache

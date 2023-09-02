@@ -1,0 +1,12 @@
+Z:\hoai.phamxuan\Real-time\ParametricCamp\ParametricCamp\WebSocket-Server\bin\Debug\WebSocket-Server.exe.config
+Z:\hoai.phamxuan\Real-time\ParametricCamp\ParametricCamp\WebSocket-Server\bin\Debug\WebSocket-Server.exe
+Z:\hoai.phamxuan\Real-time\ParametricCamp\ParametricCamp\WebSocket-Server\bin\Debug\WebSocket-Server.pdb
+Z:\hoai.phamxuan\Real-time\ParametricCamp\ParametricCamp\WebSocket-Server\bin\Debug\MimeTypesMap.dll
+Z:\hoai.phamxuan\Real-time\ParametricCamp\ParametricCamp\WebSocket-Server\bin\Debug\Newtonsoft.Json.dll
+Z:\hoai.phamxuan\Real-time\ParametricCamp\ParametricCamp\WebSocket-Server\bin\Debug\Newtonsoft.Json.xml
+Z:\hoai.phamxuan\Real-time\ParametricCamp\ParametricCamp\WebSocket-Server\obj\Debug\WebSocket-Server.csproj.AssemblyReference.cache
+Z:\hoai.phamxuan\Real-time\ParametricCamp\ParametricCamp\WebSocket-Server\obj\Debug\WebSocket-Server.csproj.CoreCompileInputs.cache
+Z:\hoai.phamxuan\Real-time\ParametricCamp\ParametricCamp\WebSocket-Server\obj\Debug\WebSocket-Server.csproj.CopyComplete
+Z:\hoai.phamxuan\Real-time\ParametricCamp\ParametricCamp\WebSocket-Server\obj\Debug\WebSocket-Server.exe
+Z:\hoai.phamxuan\Real-time\ParametricCamp\ParametricCamp\WebSocket-Server\obj\Debug\WebSocket-Server.pdb
+Z:\hoai.phamxuan\Real-time\ParametricCamp\ParametricCamp\WebSocket-Server\bin\Debug\websocket-sharp.dll

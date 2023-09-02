@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+</head>
+
+<body>
+
+    <!-- <button onclick="changeValue()">Change Value</button> -->
+    <!-- <input type="text" id="username" value="Kitajima2910" />
+    <br />
+    <button id="button1">Submit</button> -->
+    <!-- <canvas id="mycanvas" width="1200" height="500"></canvas> -->
+    <canvas id="canvas" width="500px" height="500px" style="border: 1px solid gray;"></canvas>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script>
+
+        var preX;
+        var preY;
+        var paint;
+        var canvas;
+        var context;
+
+        $(function () {
+            canvas = document.getElementById("canvas");
+            context = canvas.getContext("2d");
+
+            $('#canvas').mousedown(function (e) {
+                preX = e.pageX - this.offsetLeft;
+                preY = e.pageY - this.offsetTop;
+                paint = true;
+            });
+
+            $('#canvas').mousemove(function (e) {
+                if (paint) {
+                    var x = e.pageX - this.offsetLeft;
+                    var y = e.pageY - this.offsetTop;
+                    context.moveTo(preX, preY);
+                    context.lineTo(x, y);
+                    context.stroke();
+                    preX = x;
+                    preY = y;
+                }
+            });
+
+            $('#canvas').mouseenter(function (e) {
+                if (paint) {
+                    preX = e.pageX - this.offsetLeft;
+                    preY = e.pageY - this.offsetTop;
+                }
+            });
+
+            $("#canvas").mouseup(function () {
+                paint = false;
+            });
+
+            $('#canvas').mouseleave(function (e) {
+                paint = false;
+            });
+            
+        });
+
+        // localStorage.abc = "123";
+        // sessionStorage.myVariable = "Hello. ";
+        // localStorage.myVariable1 = "Nice to meet you!";
+        // localStorage.myVariable2 = "Nice to meet you 2!";
+
+        // document.write(sessionStorage.myVariable);
+        // document.write(localStorage.myVariable);
+
+        // localStorage.clear();
+        // console.log(localStorage);
+
+        // if(window.addEventListener) {
+        //     window.addEventListener('storage', storage_event, false);
+        // } else if(window.attachEvent) { // IE
+        //     window.attachEvent('onstorage', storage_event, false);
+        // }
+
+        // function storage_event(event) {
+        //     console.log(event);
+        // }
+
+        // function changeValue() {
+        //     localStorage.myValue = Math.random();
+        // }
+
+        // Storage.prototype.search = function(keyword) {
+        //     var array = new Array();
+        //     var re = new RegExp(keyword, "gi");
+        //     for(var i = 0; i < this.length; i++) {
+        //         var value = this.getItem(this.key(i));
+        //         if(value.search(re) > -1) {
+        //             array.push(value);
+        //         }
+        //     }
+        //     return array;
+        // }
+
+        // console.log(localStorage);
+        // console.log(localStorage.search("2"));
+
+        // var db = openDatabase("mydb", "1.0", "My First DB", 5 * 1024 * 1024);
+        // db.transaction(function (tx) {
+        //     tx.executeSql("CREATE TABLE IF NOT EXISTS CUSTOMERS(id unique, name)");
+        //     // tx.executeSql("INSERT INTO CUSTOMERS (id, name) VALUES (1, 'peter')");
+        //     // tx.executeSql("INSERT INTO CUSTOMERS (id, name) VALUES (2, 'paul')");
+        //     tx.executeSql("INSERT INTO CUSTOMERS (id, name) VALUES (?, ?)", [1, "peter"]);
+        //     tx.executeSql("INSERT INTO CUSTOMERS (id, name) VALUES (?, ?)", [2, "paul"]);
+        // });
+
+        // var worker = new Worker('mytask.js');
+
+        // document.getElementById("button1").onclick = function () {
+        //     var name = document.getElementById("username").value;
+        //     worker.postMessage(name);
+        // };
+
+        // worker.onmessage = function (event) {
+        //     alert(event.data);
+        //     worker.terminate(); // Giải phóng
+        // };
+
+        // const RADIUS = 20;
+        // var cx = 100;
+        // var cy = 100;
+        // var speedX = 2;
+        // var speedY = 2;
+        // var _canvas;
+        // var _context;
+        // var _reqAnimation;
+        // var _angle = 0;
+
+        // function update(time) {
+        //     cx += speedX;
+        //     cy += speedY;
+
+        //     if (cx - RADIUS < 0 || cx > _canvas.width - RADIUS)
+        //         speedX = -speedX;
+        //     if (cy - RADIUS < 0 || cy > _canvas.height - RADIUS)
+        //         speedY = -speedY;
+        //     // draw
+        //     _context.clearRect(0, 0, _canvas.width, _canvas.height);
+        //     _context.beginPath();
+        //     _context.arc(cx, cy, RADIUS, 0, Math.PI * 2, false);
+        //     _context.closePath();
+        //     _context.fill();
+        //     _reqAnimation(update);
+        // }
+
+        // window.onload = function () {
+        //     _canvas = document.getElementById("canvas");
+        //     _canvas.style.border = "1px solid #ccc";
+        //     _context = _canvas.getContext("2d");
+        //     _context.fillStyle = "red";
+        //     cx = _canvas.width / 2;
+        //     cy = _canvas.height / 2;
+
+        //     _reqAnimation = window.requestAnimationFrame ||
+        //         window.mozRequestAnimationFrame ||
+        //         window.webkitRequestAnimationFrame ||
+        //         window.msRequestAnimationFrame ||
+        //         window.oRequestAnimationFrame;
+        //     if (_reqAnimation)
+        //         update();
+        //     else
+        //         alert("Your browser doesn't support requestAnimationFrame.");
+        // };
+
+        // var canvas = document.getElementById("mycanvas");
+        // var context = canvas.getContext("2d");
+
+        // window.onload = function () {
+        //     var img = new Image();
+
+        //     img.onload = function () {
+        //         invertColor(this);
+        //     };
+        //     img.src = "Avatar.jpg";
+        // };
+
+        // function invertColor(img) {
+        //     // draw image at top-left corner
+        //     context.drawImage(img, 0, 0);
+        //     // draw original image right beside the previous image
+        //     context.drawImage(img, img.width, 0);
+        //     // get ImageData object from the left image
+        //     var imageData = context.getImageData(0, 0, img.width, img.height);
+        //     var data = imageData.data;
+        //     for (var i = 0; i < data.length; i += 4) {
+        //         data[i] = 255 - data[i]; // red
+        //         data[i + 1] = 255 - data[i + 1]; // green
+        //         data[i + 2] = 255 - data[i + 2]; // blue
+        //         data[i + 3] = 255; // alpha
+        //     }
+        //     context.putImageData(imageData, 0, 0);
+        // }
+
+    </script>
+</body>
+
+</html>

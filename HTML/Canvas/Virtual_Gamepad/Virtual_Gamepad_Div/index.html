@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Gamepad - 2910</title>
+
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/main.css">
+</head>
+
+<body>
+    <img class="btn-action a" src="./image/ButtonA.png" alt="Button A Released">
+    <img class="btn-action b" src="./image/ButtonB.png" alt="Button B Released">
+    <img class="btn-action x" src="./image/ButtonX.png" alt="Button X Released">
+    <img class="btn-action y" src="./image/ButtonY.png" alt="Button Y Released">
+
+    <script>
+        document.body.addEventListener("touchstart", function() {
+            
+            window.open("index.html","","fullscreen")
+        }, false);
+        
+    </script>
+</body>
+
+</html>
