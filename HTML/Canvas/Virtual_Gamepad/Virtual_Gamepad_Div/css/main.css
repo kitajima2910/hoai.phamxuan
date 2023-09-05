@@ -9,18 +9,34 @@
 html,
 body {
     width: 100%;
-    height: calc(100% - 50px);
+    height: 100%;
     overflow: hidden;
 }
 
 body {
-    position: relative;
+    /* position: relative; */
     background-color: aquamarine;
-}
 
-body { min-height:540px; }     
-body[orient="portrait"] { min-height:540px; }
-body[orient="landscape"] { min-height:400px; }
+    display: -webkit-box;
+
+    display: -webkit-flex;
+
+    display: -moz-box;
+
+    display: -ms-flexbox;
+
+    display: flex;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+       -moz-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: end;
+    -webkit-align-items: flex-end;
+       -moz-box-align: end;
+        -ms-flex-align: end;
+            align-items: flex-end;
+}
 
 /* Start: Commons */
 .btn-action {
@@ -37,7 +53,7 @@ body[orient="landscape"] { min-height:400px; }
     rotate: 90deg;
 }
 
-.btn-action.a {
+/* .btn-action.a {
     position: absolute;
     left: 10%;
     bottom: 10%;
@@ -59,12 +75,12 @@ body[orient="landscape"] { min-height:400px; }
     position: absolute;
     left: 40%;
     bottom: 10%;
-}
+} */
 
 /* End: CSS Button Action */
 /* } */
 
-@media (orientation: landscape) {
+/* @media (orientation: landscape) {
     html {
         transform: rotate(-90deg);
         transform-origin: left top;
@@ -75,4 +91,4 @@ body[orient="landscape"] { min-height:400px; }
         top: 100%;
         left: 0;
     }
-}
+} */
