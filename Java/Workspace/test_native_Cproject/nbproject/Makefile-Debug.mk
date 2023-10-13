@@ -35,7 +35,8 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/_ext/9daa4927/Test1.o
+	${OBJECTDIR}/_ext/9daa4927/Test1.o \
+	${OBJECTDIR}/_ext/9daa4927/Test2.o
 
 
 # C Compiler Flags
@@ -66,6 +67,11 @@ ${OBJECTDIR}/_ext/9daa4927/Test1.o: /Z/hoai.phamxuan/Java/Workspace/test_native_
 	${MKDIR} -p ${OBJECTDIR}/_ext/9daa4927
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -I/C/Program\ Files/Java/jdk1.8.0_281/include -I/C/Program\ Files/Java/jdk1.8.0_281/include/win32 -std=c++11  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/9daa4927/Test1.o /Z/hoai.phamxuan/Java/Workspace/test_native_Cproject/Test1.cpp
+
+${OBJECTDIR}/_ext/9daa4927/Test2.o: /Z/hoai.phamxuan/Java/Workspace/test_native_Cproject/Test2.cpp
+	${MKDIR} -p ${OBJECTDIR}/_ext/9daa4927
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I/C/Program\ Files/Java/jdk1.8.0_281/include -I/C/Program\ Files/Java/jdk1.8.0_281/include/win32 -std=c++11  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/9daa4927/Test2.o /Z/hoai.phamxuan/Java/Workspace/test_native_Cproject/Test2.cpp
 
 # Subprojects
 .build-subprojects:

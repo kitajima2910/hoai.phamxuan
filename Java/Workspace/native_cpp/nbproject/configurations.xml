@@ -4,8 +4,7 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
-      <itemPath>Z:/hoai.phamxuan/Java/Workspace/test_native_Cproject/Test1.h</itemPath>
-      <itemPath>Z:/hoai.phamxuan/Java/Workspace/test_native_Cproject/Test2.h</itemPath>
+      <itemPath>Z:/hoai.phamxuan/Java/Workspace/native_cpp/TestOverloading.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -14,8 +13,7 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
-      <itemPath>Z:/hoai.phamxuan/Java/Workspace/test_native_Cproject/Test1.cpp</itemPath>
-      <itemPath>Z:/hoai.phamxuan/Java/Workspace/test_native_Cproject/Test2.cpp</itemPath>
+      <itemPath>Z:/hoai.phamxuan/Java/Workspace/native_cpp/TestOverloading.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
                    displayName="Test Files"
@@ -47,29 +45,19 @@
         </cTool>
         <ccTool>
           <architecture>2</architecture>
-          <standard>8</standard>
+          <standard>11</standard>
           <incDir>
             <pElem>C:/Program Files/Java/jdk1.8.0_281/include</pElem>
             <pElem>C:/Program Files/Java/jdk1.8.0_281/include/win32</pElem>
           </incDir>
         </ccTool>
       </compileType>
-      <item path="Z:/hoai.phamxuan/Java/Workspace/test_native_Cproject/Test1.cpp"
+      <item path="Z:/hoai.phamxuan/Java/Workspace/native_cpp/TestOverloading.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
-      <item path="Z:/hoai.phamxuan/Java/Workspace/test_native_Cproject/Test1.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="Z:/hoai.phamxuan/Java/Workspace/test_native_Cproject/Test2.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="Z:/hoai.phamxuan/Java/Workspace/test_native_Cproject/Test2.h"
+      <item path="Z:/hoai.phamxuan/Java/Workspace/native_cpp/TestOverloading.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -93,7 +81,7 @@
         <ccTool>
           <developmentMode>5</developmentMode>
           <architecture>2</architecture>
-          <standard>8</standard>
+          <standard>11</standard>
           <incDir>
             <pElem>C:/Program Files/Java/jdk1.8.0_281/include</pElem>
             <pElem>C:/Program Files/Java/jdk1.8.0_281/include/win32</pElem>
@@ -106,22 +94,12 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
-      <item path="Z:/hoai.phamxuan/Java/Workspace/test_native_Cproject/Test1.cpp"
+      <item path="Z:/hoai.phamxuan/Java/Workspace/native_cpp/TestOverloading.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
-      <item path="Z:/hoai.phamxuan/Java/Workspace/test_native_Cproject/Test1.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="Z:/hoai.phamxuan/Java/Workspace/test_native_Cproject/Test2.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="Z:/hoai.phamxuan/Java/Workspace/test_native_Cproject/Test2.h"
+      <item path="Z:/hoai.phamxuan/Java/Workspace/native_cpp/TestOverloading.h"
             ex="false"
             tool="3"
             flavor2="0">
