@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class TestApp {
+public class DatabaseConnection {
 
     private static String url = "jdbc:postgresql://localhost:5432/dvdrental";
     private static String user = "postgres";
@@ -14,7 +14,7 @@ public class TestApp {
         getConnection();
     }
 
-    private static Connection getConnection() {
+    public static Connection getConnection() {
         Connection connection = null;
 
         try {

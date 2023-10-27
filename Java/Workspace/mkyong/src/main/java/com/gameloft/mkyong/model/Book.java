@@ -1,0 +1,80 @@
+package com.gameloft.mkyong.model;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+public class Book {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+	private String title;
+	private BigDecimal price;
+	private LocalDate publishDate;
+
+	// for JPA only, no use
+	public Book() {
+		super();
+	}
+
+	// getters, setters and constructor
+	public Book(Long id, String title, BigDecimal price, LocalDate publishDate) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.price = price;
+		this.publishDate = publishDate;
+	}
+	
+	public Book(String title, BigDecimal price, LocalDate publishDate) {
+		super();
+		this.title = title;
+		this.price = price;
+		this.publishDate = publishDate;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public BigDecimal getPrice() {
+		return price;
+	}
+
+	public void setPrice(BigDecimal price) {
+		this.price = price;
+	}
+
+	public LocalDate getPublishDate() {
+		return publishDate;
+	}
+
+	public void setPublishDate(LocalDate publishDate) {
+		this.publishDate = publishDate;
+	}
+
+	@Override
+	public String toString() {
+		return "Book [id=" + id + ", title=" + title + ", price=" + price + ", publishDate=" + publishDate + "]";
+	}
+
+}
