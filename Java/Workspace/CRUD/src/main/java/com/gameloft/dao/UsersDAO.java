@@ -62,6 +62,36 @@ public class UsersDAO {
         
     }
     
+    public static boolean update(Users users) {
+        try {
+            String sql = "UPDATE users SET name=?, email=?, country=?, password=? WHERE id=?";
+            PreparedStatement ps = Database.getInstance().getConnection().prepareCall(sql);
+            ps.setString(1, users.getName());
+            ps.setString(2, users.getEmail());
+            ps.setString(3, users.getCountry());
+            ps.setString(4, users.getPassword());
+            ps.setString(5, String.valueOf(users.getId()));
+            ps.executeUpdate();
+            return true;
+        } catch(SQLException ex) {
+            Logger.getLogger(UsersDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+    
+    public static boolean delete(Users users) {
+        try {
+            String sql = "DELETE FROM users WHERE id=?";
+            PreparedStatement ps = Database.getInstance().getConnection().prepareCall(sql);
+            ps.setString(1, String.valueOf(users.getId()));
+            ps.executeUpdate();
+            return true;
+        } catch(SQLException ex) {
+            Logger.getLogger(UsersDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+    
     public static void main(String[] args) {
 //        System.out.println(UsersDAO.getAll().size());
         if(UsersDAO.insert(new Users("", "sany.wong@gmail.com", "Singapore", "123456"))) {

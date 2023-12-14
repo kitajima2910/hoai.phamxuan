@@ -89,7 +89,7 @@ public class Database {
                     for (int i = 0; i < 50; i++) {
                         preparedStatement.setString(1, faker.name().fullName());
                         preparedStatement.setString(2, faker.internet().emailAddress());
-                        preparedStatement.setString(3, faker.address().country());
+                        preparedStatement.setString(3, faker.address().countryCode());
                         preparedStatement.setString(4, faker.internet().password());
 
                         preparedStatement.executeUpdate();

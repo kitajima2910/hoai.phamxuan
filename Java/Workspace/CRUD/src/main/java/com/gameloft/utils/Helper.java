@@ -11,6 +11,9 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.util.List;
+import java.util.Locale;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -94,6 +97,17 @@ public class Helper {
                     ((JPasswordField) txt).setText("");
                 }
             }
+        }
+
+    }
+
+    public static class JComboBoxMain {
+
+        public static void country(JComboBox comboBox) {
+
+            String[] countryCodes = java.util.Locale.getISOCountries();
+            comboBox.setModel(new DefaultComboBoxModel(countryCodes));
+
         }
 
     }

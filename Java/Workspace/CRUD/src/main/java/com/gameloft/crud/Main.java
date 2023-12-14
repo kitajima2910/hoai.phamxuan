@@ -9,10 +9,12 @@ import com.gameloft.common.ValidMSG;
 import com.gameloft.dao.UsersDAO;
 import com.gameloft.model.Users;
 import com.gameloft.utils.Helper;
+import java.awt.HeadlessException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 
 /**
  *
@@ -28,6 +30,11 @@ public class Main extends javax.swing.JFrame {
         Helper.JFrameMain.init(this);
         Helper.JTableMain.init(tblShow);
         Helper.JTableMain.showData(tblShow);
+            
+        txtID.setVisible(false);
+        txtCountry.setVisible(false);
+        
+        Helper.JComboBoxMain.country(cbCountry);
     }
 
     /**
@@ -54,11 +61,12 @@ public class Main extends javax.swing.JFrame {
         btnDelete = new javax.swing.JButton();
         btnUpdate = new javax.swing.JButton();
         lblError = new javax.swing.JLabel();
+        txtID = new javax.swing.JTextField();
+        cbCountry = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblShow = new javax.swing.JTable();
         btnFaker = new javax.swing.JButton();
         progressBarData = new javax.swing.JProgressBar();
-        lblTest = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -70,6 +78,7 @@ public class Main extends javax.swing.JFrame {
         jLabel2.setText("ĐĂNG KÝ");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel1.setEnabled(false);
 
         jLabel3.setText("Tên:");
 
@@ -87,13 +96,25 @@ public class Main extends javax.swing.JFrame {
         });
 
         btnDelete.setText("Xoá");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
 
         btnUpdate.setText("Sửa");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
 
         lblError.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         lblError.setForeground(new java.awt.Color(255, 51, 51));
         lblError.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblError.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+
+        txtID.setEnabled(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -103,7 +124,7 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
                             .addComponent(jLabel4)
@@ -111,22 +132,25 @@ public class Main extends javax.swing.JFrame {
                             .addComponent(jLabel6)
                             .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(39, 39, 39)
                                 .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txtName)
-                                .addComponent(txtEmail)
-                                .addComponent(txtCountry)
-                                .addComponent(txtPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)))))
+                            .addComponent(txtName)
+                            .addComponent(txtEmail)
+                            .addComponent(txtCountry)
+                            .addComponent(txtPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
+                            .addComponent(txtID)
+                            .addComponent(cbCountry, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(49, 49, 49)
+                .addGap(9, 9, 9)
+                .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -134,11 +158,13 @@ public class Main extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(54, 54, 54)
+                .addGap(51, 51, 51)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(txtCountry, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(54, 54, 54)
+                    .addComponent(cbCountry, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(14, 14, 14)
+                .addComponent(txtCountry, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -148,7 +174,7 @@ public class Main extends javax.swing.JFrame {
                     .addComponent(btnDelete)
                     .addComponent(btnUpdate))
                 .addGap(18, 18, 18)
-                .addComponent(lblError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblError, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -163,6 +189,11 @@ public class Main extends javax.swing.JFrame {
                 "ID", "Name", "Email", "Country", "Password"
             }
         ));
+        tblShow.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblShowMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblShow);
 
         btnFaker.setText("Tạo dữ liệu giả");
@@ -173,8 +204,6 @@ public class Main extends javax.swing.JFrame {
         });
 
         progressBarData.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-
-        lblTest.setText("jLabel7");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -194,11 +223,7 @@ public class Main extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(progressBarData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 966, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblTest, javax.swing.GroupLayout.PREFERRED_SIZE, 745, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 966, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -207,13 +232,11 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(btnFaker))
-                        .addComponent(progressBarData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(lblTest))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel2)
+                        .addComponent(btnFaker))
+                    .addComponent(progressBarData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 539, Short.MAX_VALUE)
@@ -232,60 +255,145 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnFakerActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        String name = txtName.getText().trim();
-        String email = txtEmail.getText().trim();
-        String country = txtCountry.getText().trim();
-        String password = String.valueOf(txtPassword.getPassword());
+        lblError.setText("");
         
+        try {
+            String name = txtName.getText().trim();
+            String email = txtEmail.getText().trim();
+//            String country = txtCountry.getText().trim();
+            String country = cbCountry.getSelectedItem().toString();
+            String password = String.valueOf(txtPassword.getPassword());
+
+            int validErrors = checkErrors(name, email, country, password).size();
+
+            if (validErrors == 3) {
+
+                lblError.setText("");
+
+                if (UsersDAO.insert(new Users(name, email, country, password))) {
+                    Helper.JTableMain.showData(tblShow);
+                    JOptionPane.showMessageDialog(this, "Đã thêm dữ liệu thành công!", "Hệ thống", JOptionPane.INFORMATION_MESSAGE);
+                    Helper.JTextFieldMain.reset(new Object[]{txtID, txtName, txtEmail, txtCountry, txtPassword});
+                } else {
+                    JOptionPane.showMessageDialog(this, "Dữ liệu thêm vào lỗi!", "Hệ thống", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        } catch (HeadlessException e) {
+            JOptionPane.showMessageDialog(this, "Dữ liệu thêm vào lỗi!", "Hệ thống", JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }//GEN-LAST:event_btnAddActionPerformed
+
+    private void tblShowMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblShowMouseClicked
+        lblError.setText("");
+        
+        int row = tblShow.getSelectedRow();
+        String id = tblShow.getModel().getValueAt(row, 0).toString();
+        String name = tblShow.getModel().getValueAt(row, 1).toString();
+        String email = tblShow.getModel().getValueAt(row, 2).toString();
+        String country = tblShow.getModel().getValueAt(row, 3).toString();
+        String password = tblShow.getModel().getValueAt(row, 4).toString();
+
+        txtID.setText(id);
+        txtName.setText(name);
+        txtEmail.setText(email);
+//        txtCountry.setText(country);
+        cbCountry.setSelectedItem(country);
+        txtPassword.setText(password);
+
+    }//GEN-LAST:event_tblShowMouseClicked
+
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        lblError.setText("");
+        try {
+            String id = txtID.getText().trim();
+            String name = txtName.getText().trim();
+            String email = txtEmail.getText().trim();
+            String country = txtCountry.getText().trim();
+            String password = String.valueOf(txtPassword.getPassword());
+
+            int validErrors = checkErrors(name, email, country, password).size();
+
+            if (validErrors == 3) {
+
+                lblError.setText("");
+
+                if (UsersDAO.update(new Users(Long.valueOf(id), name, email, country, password))) {
+                    Helper.JTableMain.showData(tblShow);
+                    JOptionPane.showMessageDialog(this, "Đã cập nhật dữ liệu thành công!", "Hệ thống", JOptionPane.INFORMATION_MESSAGE);
+                    Helper.JTextFieldMain.reset(new Object[]{txtID, txtName, txtEmail, txtCountry, txtPassword});
+                } else {
+                    JOptionPane.showMessageDialog(this, "Dữ liệu cập nhật vào lỗi!", "Hệ thống", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        } catch (HeadlessException | NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Dữ liệu cập nhật vào lỗi!", "Hệ thống", JOptionPane.ERROR_MESSAGE);
+        }
+
+    }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        
+        lblError.setText("");
+        try {
+            String id = txtID.getText().trim();
+            String name = txtName.getText().trim();
+            String email = txtEmail.getText().trim();
+            String country = txtCountry.getText().trim();
+            String password = String.valueOf(txtPassword.getPassword());
+            
+            if (UsersDAO.delete(new Users(Long.valueOf(id), name, email, country, password))) {
+                    Helper.JTableMain.showData(tblShow);
+                    JOptionPane.showMessageDialog(this, "Đã xoá dữ liệu thành công!", "Hệ thống", JOptionPane.INFORMATION_MESSAGE);
+                    Helper.JTextFieldMain.reset(new Object[]{txtID, txtName, txtEmail, txtCountry, txtPassword});
+                } else {
+                    JOptionPane.showMessageDialog(this, "Dữ liệu xoá bị lỗi!", "Hệ thống", JOptionPane.ERROR_MESSAGE);
+                }
+            
+        } catch (HeadlessException | NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Dữ liệu xoá bị lỗi!", "Hệ thống", JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private List<String> checkErrors(String name, String email, String country, String password) {
         List<String> errors = new ArrayList<>();
         errors.add("<html><div style='margin-left: 50px'>");
         errors.add("<p style='text-indent: -10px; margin-bottom: 5px;'>Lỗi:</p>");
-        
+
         if (ValidMSG.isEmpty(name)) {
             errors.add("<p>Tên chưa được nhập.</p>");
         } else {
-            if(ValidMSG.isMin(name, 3)) {
+            if (ValidMSG.isMin(name, 3)) {
                 errors.add("<p>Tên phải lớn hơn 3 kí tự.</p>");
             }
         }
-        
+
         if (ValidMSG.isEmpty(email)) {
             errors.add("<p>Email chưa được nhập.</p>");
         } else {
-            if(!ValidMSG.isEmail(email)) {
+            if (!ValidMSG.isEmail(email)) {
                 errors.add("<p>Email chưa đúng định dạng.</p>");
             }
         }
-        
-        if (ValidMSG.isEmpty(country)) {
-            errors.add("<p>Quốc gia chưa được nhập.</p>");
-        }
-        
+
+//        if (ValidMSG.isEmpty(country)) {
+//            errors.add("<p>Quốc gia chưa được nhập.</p>");
+//        }
+
         if (ValidMSG.isEmpty(password)) {
             errors.add("<p>Mật khẩu chưa được nhập.</p>");
         } else {
-            if(ValidMSG.isMin(password, 3)) {
+            if (ValidMSG.isMin(password, 3)) {
                 errors.add("<p>Mật khẩu phải lớn hơn 3 kí tự.</p>");
             }
         }
-        
+
         errors.add("</div></html>");
         lblError.setText(errors.stream().collect(Collectors.joining()));
-        
-        if(errors.size() == 3) {
-            
-            lblError.setText("");
-            
-            if (UsersDAO.insert(new Users(name, email, country, password))) {
-                Helper.JTableMain.showData(tblShow);
-                JOptionPane.showMessageDialog(this, "Đã thêm dữ liệu thành công!", "Hệ thống", JOptionPane.INFORMATION_MESSAGE);
-                Helper.JTextFieldMain.reset(new Object[]{txtName, txtEmail, txtCountry, txtPassword});
-            } else {
-                JOptionPane.showMessageDialog(this, "Dữ liệu thêm vào lỗi!", "Hệ thống", JOptionPane.ERROR_MESSAGE);
-            }
-        }
 
-    }//GEN-LAST:event_btnAddActionPerformed
+        return errors;
+    }
 
     /**
      * @param args the command line arguments
@@ -327,6 +435,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnFaker;
     private javax.swing.JButton btnUpdate;
+    private javax.swing.JComboBox<String> cbCountry;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -336,11 +445,11 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblError;
-    private javax.swing.JLabel lblTest;
     private javax.swing.JProgressBar progressBarData;
     private javax.swing.JTable tblShow;
     private javax.swing.JTextField txtCountry;
     private javax.swing.JTextField txtEmail;
+    private javax.swing.JTextField txtID;
     private javax.swing.JTextField txtName;
     private javax.swing.JPasswordField txtPassword;
     // End of variables declaration//GEN-END:variables

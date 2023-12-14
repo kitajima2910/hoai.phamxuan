@@ -20,7 +20,7 @@ public class ValidMSG {
     }
     
     public static boolean isEmail(String str) {
-        return str.matches("^\\w{1,}@\\w{2,}(.\\w{2,}){1,2}$");
+        return str.matches("^.{1,}@\\w{2,}(.\\w{2,}){1,2}$");
     }
     
     public static boolean isMin(String str, int num) {
