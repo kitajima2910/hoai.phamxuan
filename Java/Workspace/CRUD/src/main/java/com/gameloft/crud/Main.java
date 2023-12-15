@@ -14,7 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 /**
  *
@@ -29,12 +30,14 @@ public class Main extends javax.swing.JFrame {
         initComponents();
         Helper.JFrameMain.init(this);
         Helper.JTableMain.init(tblShow);
-        Helper.JTableMain.showData(tblShow);
+        Helper.JTableMain.showData(tblShow, false, "");
             
         txtID.setVisible(false);
         txtCountry.setVisible(false);
         
         Helper.JComboBoxMain.country(cbCountry);
+        
+        search();
     }
 
     /**
@@ -67,6 +70,7 @@ public class Main extends javax.swing.JFrame {
         tblShow = new javax.swing.JTable();
         btnFaker = new javax.swing.JButton();
         progressBarData = new javax.swing.JProgressBar();
+        txtSearch = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -223,7 +227,11 @@ public class Main extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(progressBarData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 966, Short.MAX_VALUE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 966, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -232,11 +240,13 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel2)
-                        .addComponent(btnFaker))
-                    .addComponent(progressBarData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(btnFaker))
+                        .addComponent(progressBarData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 539, Short.MAX_VALUE)
@@ -251,7 +261,7 @@ public class Main extends javax.swing.JFrame {
     private void btnFakerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFakerActionPerformed
 
         Helper.JProgressBarMain.processJTable(progressBarData, tblShow, "Đã tạo dữ liệu giả thành công!", "Hệ thống");
-
+        Helper.JTextFieldMain.reset(new Object[]{txtID, txtName, txtEmail, txtCountry, txtPassword, txtSearch});
     }//GEN-LAST:event_btnFakerActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
@@ -271,9 +281,9 @@ public class Main extends javax.swing.JFrame {
                 lblError.setText("");
 
                 if (UsersDAO.insert(new Users(name, email, country, password))) {
-                    Helper.JTableMain.showData(tblShow);
+                    Helper.JTableMain.showData(tblShow, false, "");
                     JOptionPane.showMessageDialog(this, "Đã thêm dữ liệu thành công!", "Hệ thống", JOptionPane.INFORMATION_MESSAGE);
-                    Helper.JTextFieldMain.reset(new Object[]{txtID, txtName, txtEmail, txtCountry, txtPassword});
+                    Helper.JTextFieldMain.reset(new Object[]{txtID, txtName, txtEmail, txtCountry, txtPassword, txtSearch});
                 } else {
                     JOptionPane.showMessageDialog(this, "Dữ liệu thêm vào lỗi!", "Hệ thống", JOptionPane.ERROR_MESSAGE);
                 }
@@ -319,9 +329,9 @@ public class Main extends javax.swing.JFrame {
                 lblError.setText("");
 
                 if (UsersDAO.update(new Users(Long.valueOf(id), name, email, country, password))) {
-                    Helper.JTableMain.showData(tblShow);
+                    Helper.JTableMain.showData(tblShow, false, "");
                     JOptionPane.showMessageDialog(this, "Đã cập nhật dữ liệu thành công!", "Hệ thống", JOptionPane.INFORMATION_MESSAGE);
-                    Helper.JTextFieldMain.reset(new Object[]{txtID, txtName, txtEmail, txtCountry, txtPassword});
+                    Helper.JTextFieldMain.reset(new Object[]{txtID, txtName, txtEmail, txtCountry, txtPassword, txtSearch});
                 } else {
                     JOptionPane.showMessageDialog(this, "Dữ liệu cập nhật vào lỗi!", "Hệ thống", JOptionPane.ERROR_MESSAGE);
                 }
@@ -343,9 +353,9 @@ public class Main extends javax.swing.JFrame {
             String password = String.valueOf(txtPassword.getPassword());
             
             if (UsersDAO.delete(new Users(Long.valueOf(id), name, email, country, password))) {
-                    Helper.JTableMain.showData(tblShow);
+                    Helper.JTableMain.showData(tblShow, false, "");
                     JOptionPane.showMessageDialog(this, "Đã xoá dữ liệu thành công!", "Hệ thống", JOptionPane.INFORMATION_MESSAGE);
-                    Helper.JTextFieldMain.reset(new Object[]{txtID, txtName, txtEmail, txtCountry, txtPassword});
+                    Helper.JTextFieldMain.reset(new Object[]{txtID, txtName, txtEmail, txtCountry, txtPassword, txtSearch});
                 } else {
                     JOptionPane.showMessageDialog(this, "Dữ liệu xoá bị lỗi!", "Hệ thống", JOptionPane.ERROR_MESSAGE);
                 }
@@ -393,6 +403,32 @@ public class Main extends javax.swing.JFrame {
         lblError.setText(errors.stream().collect(Collectors.joining()));
 
         return errors;
+    }
+    
+    private void search() {
+        
+        txtSearch.getDocument().addDocumentListener(new DocumentListener() {
+            
+            public void update() {
+                Helper.JTableMain.showData(tblShow, true, txtSearch.getText());
+            }
+            
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                update();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                update();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                update();
+            }
+        });
+        
     }
 
     /**
@@ -452,5 +488,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTextField txtID;
     private javax.swing.JTextField txtName;
     private javax.swing.JPasswordField txtPassword;
+    private javax.swing.JTextField txtSearch;
     // End of variables declaration//GEN-END:variables
 }

@@ -44,6 +44,33 @@ public class UsersDAO {
         return list;
     }
     
+    public static List<Users> getSearch(String keyword) {
+        List<Users> list = new ArrayList<>();
+        
+        try {
+            String sql = "select * from users where id like ? or name like ? or email like ? or country like ? order by id desc";
+            PreparedStatement ps = Database.getInstance().getConnection().prepareStatement(sql);
+            ps.setString(1, '%' + keyword + '%');
+            ps.setString(2, '%' + keyword + '%');
+            ps.setString(3, '%' + keyword + '%');
+            ps.setString(4, '%' + keyword + '%');
+            ResultSet rs = ps.executeQuery();
+            
+            while(rs.next()) {
+                long id = Long.valueOf(rs.getString("id"));
+                String name = rs.getString("name");
+                String email = rs.getString("email");
+                String country = rs.getString("country");
+                String password = rs.getString("password");
+                list.add(new Users(id, name, email, country, password));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UsersDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return list;
+    }
+    
     public static boolean insert(Users users) {
         
         try {
@@ -94,11 +121,12 @@ public class UsersDAO {
     
     public static void main(String[] args) {
 //        System.out.println(UsersDAO.getAll().size());
-        if(UsersDAO.insert(new Users("", "sany.wong@gmail.com", "Singapore", "123456"))) {
-            System.out.println("Yes");
-        } else {
-            System.out.println("No");
-        }
+        System.out.println(UsersDAO.getSearch("ha").size());
+//        if(UsersDAO.insert(new Users("", "sany.wong@gmail.com", "Singapore", "123456"))) {
+//            System.out.println("Yes");
+//        } else {
+//            System.out.println("No");
+//        }
     }
     
 }

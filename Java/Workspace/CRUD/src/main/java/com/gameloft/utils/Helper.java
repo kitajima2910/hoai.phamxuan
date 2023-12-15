@@ -45,11 +45,11 @@ public class Helper {
             table.setDefaultEditor(Object.class, null);
         }
 
-        public static void showData(JTable table) {
+        public static void showData(JTable table, boolean flag, String keyword) {
             DefaultTableModel dtm = (DefaultTableModel) table.getModel();
             dtm.setNumRows(0);
-
-            List<Users> list = UsersDAO.getAll();
+            
+            List<Users> list = "".equals(keyword) & !flag ? UsersDAO.getAll() : UsersDAO.getSearch(keyword);
             list.forEach((u) -> {
                 Object object[] = {
                     u.getId(), u.getName(), u.getEmail(), u.getCountry(), u.getPassword()
@@ -73,7 +73,7 @@ public class Helper {
                 progressBar.setString(progressBar.getValue() + "%");
                 if (progressBar.getValue() == 100) {
                     Database.Table.createUsers();
-                    Helper.JTableMain.showData(table);
+                    Helper.JTableMain.showData(table, false, "");
                     JOptionPane.showMessageDialog(null, msg, title, JOptionPane.INFORMATION_MESSAGE);
                     progressBar.setValue(0);
                     progressBar.setString("");
