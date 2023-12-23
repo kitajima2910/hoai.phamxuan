@@ -8,14 +8,33 @@ package com.gameloft.crud;
 import com.gameloft.common.ValidMSG;
 import com.gameloft.dao.UsersDAO;
 import com.gameloft.model.Users;
+import com.gameloft.utils.Database;
 import com.gameloft.utils.Helper;
 import java.awt.HeadlessException;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -30,13 +49,16 @@ public class Main extends javax.swing.JFrame {
         initComponents();
         Helper.JFrameMain.init(this);
         Helper.JTableMain.init(tblShow);
-        Helper.JTableMain.showData(tblShow, false, "");
-            
+        try {
+            Helper.JTableMain.showData(tblShow, false, "");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Dữ liệu chưa được kết nối!", "Hệ thống", JOptionPane.WARNING_MESSAGE);
+        }
         txtID.setVisible(false);
         txtCountry.setVisible(false);
-        
+
         Helper.JComboBoxMain.country(cbCountry);
-        
+
         search();
     }
 
@@ -71,6 +93,7 @@ public class Main extends javax.swing.JFrame {
         btnFaker = new javax.swing.JButton();
         progressBarData = new javax.swing.JProgressBar();
         txtSearch = new javax.swing.JTextField();
+        btnExportExcelCSV = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -190,7 +213,7 @@ public class Main extends javax.swing.JFrame {
                 {null, null, null, null, null}
             },
             new String [] {
-                "ID", "Name", "Email", "Country", "Password"
+                "STT", "Họ & Tên", "Email", "Kí Hiệu Quốc Gia", "Mật Khẩu"
             }
         ));
         tblShow.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -208,6 +231,13 @@ public class Main extends javax.swing.JFrame {
         });
 
         progressBarData.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        btnExportExcelCSV.setText("Xuất ra Excel / CSV");
+        btnExportExcelCSV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportExcelCSVActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -229,8 +259,9 @@ public class Main extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 966, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnExportExcelCSV)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
@@ -246,7 +277,9 @@ public class Main extends javax.swing.JFrame {
                             .addComponent(jLabel2)
                             .addComponent(btnFaker))
                         .addComponent(progressBarData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnExportExcelCSV)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 539, Short.MAX_VALUE)
@@ -266,7 +299,7 @@ public class Main extends javax.swing.JFrame {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         lblError.setText("");
-        
+
         try {
             String name = txtName.getText().trim();
             String email = txtEmail.getText().trim();
@@ -291,12 +324,12 @@ public class Main extends javax.swing.JFrame {
         } catch (HeadlessException e) {
             JOptionPane.showMessageDialog(this, "Dữ liệu thêm vào lỗi!", "Hệ thống", JOptionPane.ERROR_MESSAGE);
         }
-        
+
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void tblShowMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblShowMouseClicked
         lblError.setText("");
-        
+
         int row = tblShow.getSelectedRow();
         String id = tblShow.getModel().getValueAt(row, 0).toString();
         String name = tblShow.getModel().getValueAt(row, 1).toString();
@@ -343,7 +376,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        
+
         lblError.setText("");
         try {
             String id = txtID.getText().trim();
@@ -351,20 +384,84 @@ public class Main extends javax.swing.JFrame {
             String email = txtEmail.getText().trim();
             String country = txtCountry.getText().trim();
             String password = String.valueOf(txtPassword.getPassword());
-            
+
             if (UsersDAO.delete(new Users(Long.valueOf(id), name, email, country, password))) {
-                    Helper.JTableMain.showData(tblShow, false, "");
-                    JOptionPane.showMessageDialog(this, "Đã xoá dữ liệu thành công!", "Hệ thống", JOptionPane.INFORMATION_MESSAGE);
-                    Helper.JTextFieldMain.reset(new Object[]{txtID, txtName, txtEmail, txtCountry, txtPassword, txtSearch});
-                } else {
-                    JOptionPane.showMessageDialog(this, "Dữ liệu xoá bị lỗi!", "Hệ thống", JOptionPane.ERROR_MESSAGE);
-                }
-            
+                Helper.JTableMain.showData(tblShow, false, "");
+                JOptionPane.showMessageDialog(this, "Đã xoá dữ liệu thành công!", "Hệ thống", JOptionPane.INFORMATION_MESSAGE);
+                Helper.JTextFieldMain.reset(new Object[]{txtID, txtName, txtEmail, txtCountry, txtPassword, txtSearch});
+            } else {
+                JOptionPane.showMessageDialog(this, "Dữ liệu xoá bị lỗi!", "Hệ thống", JOptionPane.ERROR_MESSAGE);
+            }
+
         } catch (HeadlessException | NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Dữ liệu xoá bị lỗi!", "Hệ thống", JOptionPane.ERROR_MESSAGE);
         }
-        
+
     }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnExportExcelCSVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportExcelCSVActionPerformed
+
+        // Xử lý chọn nơi lưu file và lấy đường dẫn
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("CHỌN NƠI LƯU");
+        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("CSV of Excel (*.csv)", "csv"));
+
+        int userSelection = fileChooser.showSaveDialog(this);
+//        String filename = "Z:\\DataQLTK.csv";
+        String filename = "";
+        
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+            filename = fileToSave.getAbsolutePath() + ".csv";
+//            System.out.println("Save as file: " + fileToSave.getAbsolutePath());
+        } else {
+            return;
+        }
+        
+        // Xử lý viết vào file
+        Path path = Paths.get(filename);
+
+        try (BufferedWriter writer = Files.newBufferedWriter(path, StandardCharsets.UTF_8)) {
+
+            String sql = "select * from users order by id desc";
+            PreparedStatement ps = Database.getInstance().getConnection().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                writer.append(rs.getString("id")).append(",")
+                        .append(rs.getString("name")).append(",")
+                        .append(rs.getString("country")).append(",")
+                        .append(rs.getString("password")).append("\n");
+            }
+
+            JOptionPane.showMessageDialog(this, "Đã xuất dữ liệu ra file CSV thành công!", "Hệ thống", JOptionPane.INFORMATION_MESSAGE);
+        } catch (IOException | SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Lỗi xuất dữ liệu!", "Hệ thống", JOptionPane.ERROR_MESSAGE);
+        }
+
+//        try {
+//            
+//            Writer w = new OutputStreamWriter(new FileOutputStream(filename), StandardCharsets.UTF_8);
+//            
+//            String sql = "select * from users order by id desc";
+//            PreparedStatement ps = Database.getInstance().getConnection().prepareStatement(sql);
+//            ResultSet rs = ps.executeQuery();
+//            
+//            while (rs.next()) {
+//                w.append(rs.getString("id")).append(",")
+//                        .append(rs.getString("name")).append(",")
+//                        .append(rs.getString("country")).append(",")
+//                        .append(rs.getString("password")).append("\n");
+//            }
+//            w.flush();
+//            w.close();
+//            
+//            JOptionPane.showMessageDialog(this, "Đã xuất dữ liệu ra file CSV thành công!", "Hệ thống", JOptionPane.INFORMATION_MESSAGE);
+//        } catch (IOException | SQLException ex) {
+//            JOptionPane.showMessageDialog(this, "Lỗi xuất dữ liệu!", "Hệ thống", JOptionPane.ERROR_MESSAGE);
+//        }
+
+    }//GEN-LAST:event_btnExportExcelCSVActionPerformed
 
     private List<String> checkErrors(String name, String email, String country, String password) {
         List<String> errors = new ArrayList<>();
@@ -390,7 +487,6 @@ public class Main extends javax.swing.JFrame {
 //        if (ValidMSG.isEmpty(country)) {
 //            errors.add("<p>Quốc gia chưa được nhập.</p>");
 //        }
-
         if (ValidMSG.isEmpty(password)) {
             errors.add("<p>Mật khẩu chưa được nhập.</p>");
         } else {
@@ -404,15 +500,15 @@ public class Main extends javax.swing.JFrame {
 
         return errors;
     }
-    
+
     private void search() {
-        
+
         txtSearch.getDocument().addDocumentListener(new DocumentListener() {
-            
+
             public void update() {
                 Helper.JTableMain.showData(tblShow, true, txtSearch.getText());
             }
-            
+
             @Override
             public void insertUpdate(DocumentEvent e) {
                 update();
@@ -428,7 +524,7 @@ public class Main extends javax.swing.JFrame {
                 update();
             }
         });
-        
+
     }
 
     /**
@@ -469,6 +565,7 @@ public class Main extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnExportExcelCSV;
     private javax.swing.JButton btnFaker;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JComboBox<String> cbCountry;
