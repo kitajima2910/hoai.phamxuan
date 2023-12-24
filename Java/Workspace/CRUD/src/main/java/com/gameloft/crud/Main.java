@@ -10,12 +10,20 @@ import com.gameloft.dao.UsersDAO;
 import com.gameloft.model.Users;
 import com.gameloft.utils.Database;
 import com.gameloft.utils.Helper;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.HeadlessException;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
@@ -94,6 +102,7 @@ public class Main extends javax.swing.JFrame {
         progressBarData = new javax.swing.JProgressBar();
         txtSearch = new javax.swing.JTextField();
         btnExportExcelCSV = new javax.swing.JButton();
+        btnExportPDF = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -239,6 +248,13 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
+        btnExportPDF.setText("Xuất ra PDF");
+        btnExportPDF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportPDFActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -261,6 +277,8 @@ public class Main extends javax.swing.JFrame {
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 966, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(btnExportExcelCSV)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnExportPDF)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
@@ -279,7 +297,8 @@ public class Main extends javax.swing.JFrame {
                         .addComponent(progressBarData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnExportExcelCSV)))
+                        .addComponent(btnExportExcelCSV)
+                        .addComponent(btnExportPDF)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 539, Short.MAX_VALUE)
@@ -409,7 +428,7 @@ public class Main extends javax.swing.JFrame {
         int userSelection = fileChooser.showSaveDialog(this);
 //        String filename = "Z:\\DataQLTK.csv";
         String filename = "";
-        
+
         if (userSelection == JFileChooser.APPROVE_OPTION) {
             File fileToSave = fileChooser.getSelectedFile();
             filename = fileToSave.getAbsolutePath() + ".csv";
@@ -417,7 +436,7 @@ public class Main extends javax.swing.JFrame {
         } else {
             return;
         }
-        
+
         // Xử lý viết vào file
         Path path = Paths.get(filename);
 
@@ -462,6 +481,69 @@ public class Main extends javax.swing.JFrame {
 //        }
 
     }//GEN-LAST:event_btnExportExcelCSVActionPerformed
+
+    private void btnExportPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportPDFActionPerformed
+
+        // Xử lý chọn nơi lưu file và lấy đường dẫn
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("CHỌN NƠI LƯU");
+        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("PDF (*.pdf)", "pdf"));
+
+        int userSelection = fileChooser.showSaveDialog(this);
+//        String filename = "Z:\\DataQLTK.pdf";
+        String filename = "";
+
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+            filename = fileToSave.getAbsolutePath() + ".pdf";
+//            System.out.println("Save as file: " + fileToSave.getAbsolutePath());
+        } else {
+            return;
+        }
+
+        // Xử lý viết vào file
+        try {
+            String sql = "select * from users order by id desc";
+            PreparedStatement ps = Database.getInstance().getConnection().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            Document document = new Document();
+            PdfWriter.getInstance(document, new FileOutputStream(filename));
+            document.open();
+            
+            PdfPTable table = new PdfPTable(5);
+            PdfPCell cell;
+            
+            while(rs.next()) {
+                String pid = rs.getString("id");
+                cell = new PdfPCell(new Phrase(pid));
+                table.addCell(cell);
+                
+                String name = rs.getString("name");
+                cell = new PdfPCell(new Phrase(name));
+                table.addCell(cell);
+                
+                String email = rs.getString("email");
+                cell = new PdfPCell(new Phrase(email));
+                table.addCell(cell);
+                
+                String country = rs.getString("country");
+                cell = new PdfPCell(new Phrase(country));
+                table.addCell(cell);
+                
+                String password = rs.getString("password");
+                cell = new PdfPCell(new Phrase(password));
+                table.addCell(cell);
+            }
+            document.add(table);
+            document.close();
+            JOptionPane.showMessageDialog(this, "Đã xuất dữ liệu ra file PDF thành công!", "Hệ thống", JOptionPane.INFORMATION_MESSAGE);
+        } catch (SQLException e) {
+        } catch (DocumentException | FileNotFoundException ex) {
+            JOptionPane.showMessageDialog(this, "Lỗi xuất dữ liệu!", "Hệ thống", JOptionPane.ERROR_MESSAGE);
+        }
+
+    }//GEN-LAST:event_btnExportPDFActionPerformed
 
     private List<String> checkErrors(String name, String email, String country, String password) {
         List<String> errors = new ArrayList<>();
@@ -536,22 +618,22 @@ public class Main extends javax.swing.JFrame {
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
         //</editor-fold>
 
         /* Create and display the form */
@@ -566,6 +648,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnExportExcelCSV;
+    private javax.swing.JButton btnExportPDF;
     private javax.swing.JButton btnFaker;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JComboBox<String> cbCountry;
