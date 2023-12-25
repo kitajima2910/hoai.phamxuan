@@ -15,8 +15,7 @@ import java.net.Socket;
 public class PortScanner {
     
     public static void main(String[] args) {
-//        checkPort("localhost");
-        checkPort("titv.vn");
+        checkPort("localhost");
     }
     
     private static void checkPort(String urlString) {
@@ -27,9 +26,9 @@ public class PortScanner {
         
         for(int i = startPort; i <= endPort; i++) {
             try {
-                Socket socket = new Socket(urlString, i);
-                System.out.println("Cong: " + i + " dang mo");
-                socket.close();
+                try (Socket socket = new Socket(urlString, i)) {
+                    System.out.println("Cong: " + i + " dang mo");
+                }
             } catch (IOException e) {
             }
         }

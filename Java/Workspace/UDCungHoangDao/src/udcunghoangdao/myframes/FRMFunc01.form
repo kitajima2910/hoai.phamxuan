@@ -22,12 +22,12 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="dateChooser01" alignment="0" pref="498" max="32767" attributes="0"/>
+                  <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Component id="btnView01" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
-                  <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
+                  <Component id="dateChooser01" pref="498" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -38,7 +38,7 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="dateChooser01" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
               <Component id="btnView01" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jPanel1" max="32767" attributes="0"/>
@@ -48,11 +48,6 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="com.toedter.calendar.JDateChooser" name="dateChooser01">
-      <Properties>
-        <Property name="dateFormatString" type="java.lang.String" value="dd/MM/yyyy"/>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JButton" name="btnView01">
       <Properties>
         <Property name="text" type="java.lang.String" value="Xem"/>
@@ -104,5 +99,10 @@
         </Component>
       </SubComponents>
     </Container>
+    <Component class="com.toedter.calendar.JDateChooser" name="dateChooser01">
+      <Properties>
+        <Property name="dateFormatString" type="java.lang.String" value="dd/MM/yyyy"/>
+      </Properties>
+    </Component>
   </SubComponents>
 </Form>

@@ -34,13 +34,11 @@ public class FRMFunc01 extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        dateChooser01 = new com.toedter.calendar.JDateChooser();
         btnView01 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         lblICON = new javax.swing.JLabel();
         lblShow01 = new javax.swing.JLabel();
-
-        dateChooser01.setDateFormatString("dd/MM/yyyy");
+        dateChooser01 = new com.toedter.calendar.JDateChooser();
 
         btnView01.setText("Xem");
         btnView01.addActionListener(new java.awt.event.ActionListener() {
@@ -75,6 +73,8 @@ public class FRMFunc01 extends javax.swing.JInternalFrame {
                 .addGap(97, 97, 97))
         );
 
+        dateChooser01.setDateFormatString("dd/MM/yyyy");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -82,11 +82,11 @@ public class FRMFunc01 extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(dateChooser01, javax.swing.GroupLayout.DEFAULT_SIZE, 498, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnView01)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(dateChooser01, javax.swing.GroupLayout.DEFAULT_SIZE, 498, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -94,7 +94,7 @@ public class FRMFunc01 extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(dateChooser01, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(14, 14, 14)
                 .addComponent(btnView01)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
