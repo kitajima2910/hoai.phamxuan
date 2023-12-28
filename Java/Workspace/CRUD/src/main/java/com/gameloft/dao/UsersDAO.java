@@ -75,7 +75,7 @@ public class UsersDAO {
         
         try {
             String sql = "INSERT INTO users(name, email, country, password) VALUES (?, ?, ?, ?)";
-            PreparedStatement ps = Database.getInstance().getConnection().prepareCall(sql);
+            PreparedStatement ps = Database.getInstance().getConnection().prepareStatement(sql);
             ps.setString(1, users.getName());
             ps.setString(2, users.getEmail());
             ps.setString(3, users.getCountry());
@@ -92,7 +92,7 @@ public class UsersDAO {
     public static boolean update(Users users) {
         try {
             String sql = "UPDATE users SET name=?, email=?, country=?, password=? WHERE id=?";
-            PreparedStatement ps = Database.getInstance().getConnection().prepareCall(sql);
+            PreparedStatement ps = Database.getInstance().getConnection().prepareStatement(sql);
             ps.setString(1, users.getName());
             ps.setString(2, users.getEmail());
             ps.setString(3, users.getCountry());
@@ -109,7 +109,7 @@ public class UsersDAO {
     public static boolean delete(Users users) {
         try {
             String sql = "DELETE FROM users WHERE id=?";
-            PreparedStatement ps = Database.getInstance().getConnection().prepareCall(sql);
+            PreparedStatement ps = Database.getInstance().getConnection().prepareStatement(sql);
             ps.setString(1, String.valueOf(users.getId()));
             ps.executeUpdate();
             return true;
