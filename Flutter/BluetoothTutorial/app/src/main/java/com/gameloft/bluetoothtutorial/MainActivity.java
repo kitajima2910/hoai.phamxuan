@@ -11,12 +11,18 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_BLUETOOTH_SCAN_PERMISSION = 3;
 
     private static boolean flagDiscovering = false;
+    private ListView lvShowDevice;
+    private ArrayList<String> listDevices;
 
 
     BluetoothAdapter bluetoothAdapter;
@@ -35,6 +43,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Ánh xạ tới layout xml
+        lvShowDevice = findViewById(R.id.lvShowDevice);
+
+        // Khởi tạo danh sách chứa tên bluetooth scan được
+        listDevices = new ArrayList<>();
 
         // Yêu cầu quyền BLUETOOTH_CONNECT
         requestBluetoothConnectPermission();
@@ -46,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
             checkBluetoothStatus();
         });
 
+        // Đăng ký bộ thu phát hiện thiết bị
         IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
         registerReceiver(receiver, filter);
 
@@ -60,10 +75,58 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     Log.d("PXH", "btnDiscovery: đang chạy");
                     flagDiscovering = true;
+
+                    // Clear list trước khi thêm lại thông tin bluetooth scan
+                    listDevices.clear();
+                    updateListView(this, listDevices, lvShowDevice);
+
                     bluetoothAdapter.startDiscovery();
                 }
             }
         });
+
+
+        TextView txtBluetoothOnOff = findViewById(R.id.txtBluetoothOnOff);
+        // Tạo một luồng để kiểm tra xem Bluetooth đang bât hay không
+        new Thread(() -> {
+            // Liên tục kiểm tra xem Bluetooth đang bât hay không
+            while (true) {
+                if (bluetoothAdapter.isEnabled()) {
+                    // Bluetooth đang bât
+                    txtBluetoothOnOff.setText("Bluetooth đang bật: có");
+                } else {
+                    // Bluetooth không bât
+                    txtBluetoothOnOff.setText("Bluetooth đang bật: không");
+                }
+
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    // Xử lý ngoại lệ
+                }
+            }
+        }).start();
+
+        TextView txtScanOnOff = findViewById(R.id.txtScanOnOff);
+        // Tạo một luồng để kiểm tra xem Bluetooth đang bât hay không
+        new Thread(() -> {
+            // Liên tục kiểm tra xem Bluetooth đang bât hay không
+            while (true) {
+                if (bluetoothAdapter.isDiscovering()) {
+                    // Bluetooth đang bât
+                    txtScanOnOff.setText("Bluetooth đang quét: có");
+                } else {
+                    // Bluetooth không bât
+                    txtScanOnOff.setText("Bluetooth đang quét: không");
+                }
+
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    // Xử lý ngoại lệ
+                }
+            }
+        }).start();
 
     }
 
@@ -164,9 +227,24 @@ public class MainActivity extends AppCompatActivity {
                 // Xử lý thiết bị tìm thấy ở đây
                 String deviceName = device.getName();
                 String deviceHardwareAddress = device.getAddress(); // MAC address
+                if(device.getName() != null) {
+                    listDevices.add(device.getName() + "\n" + device.getAddress());
+                }
                 Log.d("PXH", deviceName + " - " + deviceHardwareAddress);
+                // Thêm vào ListView
+                updateListView(context, listDevices, lvShowDevice);
             }
         }
     };
+
+    private void updateListView(Context context, List<String> listDevices, ListView lvShowDevice) {
+        lvShowDevice.setAdapter(new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, listDevices));
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(receiver);
+    }
 
 }
