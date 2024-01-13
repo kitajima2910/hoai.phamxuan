@@ -2,7 +2,10 @@ package com.gameloft.bluetoothtutorial;
 
 import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothServerSocket;
+import android.bluetooth.BluetoothSocket;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +14,8 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -21,8 +26,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,9 +43,11 @@ public class MainActivity extends AppCompatActivity {
     private static boolean flagDiscovering = false;
     private ListView lvShowDevice;
     private ArrayList<String> listDevices;
+    private ArrayList<BluetoothDevice> bluetoothDevices;
 
 
     BluetoothAdapter bluetoothAdapter;
+    private UUID applicationUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Khởi tạo danh sách chứa tên bluetooth scan được
         listDevices = new ArrayList<>();
+        bluetoothDevices = new ArrayList<>();
 
         // Yêu cầu quyền BLUETOOTH_CONNECT
         requestBluetoothConnectPermission();
@@ -61,8 +72,13 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // Đăng ký bộ thu phát hiện thiết bị
-        IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
-        registerReceiver(receiver, filter);
+        IntentFilter filterActionFound = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+        registerReceiver(receiverActionFound, filterActionFound);
+
+        // Broadcasts when bond state changes (ie:pairing)
+        IntentFilter filterActionBondStateChanged = new IntentFilter(BluetoothDevice.ACTION_BOND_STATE_CHANGED);
+        registerReceiver(receiverActionBondStateChanged, filterActionBondStateChanged);
+
 
         Button btnDiscovery = findViewById(R.id.btnDiscovery);
         btnDiscovery.setOnClickListener(v -> {
@@ -78,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
 
                     // Clear list trước khi thêm lại thông tin bluetooth scan
                     listDevices.clear();
+                    bluetoothDevices.clear();
                     updateListView(this, listDevices, lvShowDevice);
 
                     bluetoothAdapter.startDiscovery();
@@ -115,9 +132,11 @@ public class MainActivity extends AppCompatActivity {
                 if (bluetoothAdapter.isDiscovering()) {
                     // Bluetooth đang bât
                     txtScanOnOff.setText("Bluetooth đang quét: có");
+                    flagDiscovering = true;
                 } else {
                     // Bluetooth không bât
                     txtScanOnOff.setText("Bluetooth đang quét: không");
+                    flagDiscovering = false;
                 }
 
                 try {
@@ -128,6 +147,41 @@ public class MainActivity extends AppCompatActivity {
             }
         }).start();
 
+        lvShowDevice.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                // Hiển thị Toast
+                String textLine = listDevices.get(position);
+                Toast.makeText(MainActivity.this, "Bạn đã click vào: " + textLine, Toast.LENGTH_SHORT).show();
+
+                // Dừng scan các bluetooth khi chưa scan xong mà đã chọn
+                if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.BLUETOOTH_SCAN) == PackageManager.PERMISSION_GRANTED) {
+                    bluetoothAdapter.cancelDiscovery();
+                    flagDiscovering = false;
+                }
+
+                String deviceName = bluetoothDevices.get(position).getName();
+                String deviceAddress = bluetoothDevices.get(position).getAddress();
+
+                // Create the bond
+                Log.d("PXH", "Trying to pair with " + deviceName + " - " + deviceAddress);
+                bluetoothDevices.get(position).createBond();
+
+            }
+        });
+
+    }
+
+    private void listPairedDevices() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT) == PackageManager.PERMISSION_GRANTED) {
+            Set<BluetoothDevice> devices = bluetoothAdapter.getBondedDevices();
+            if (devices.size() > 0) {
+                for (BluetoothDevice device : devices) {
+                    Log.d("PXH", "Thiết bị được ghép nối: " + device.getName() + " " + device.getAddress());
+                }
+            }
+        }
     }
 
     @Override
@@ -218,7 +272,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    BroadcastReceiver receiver = new BroadcastReceiver() {
+    BroadcastReceiver receiverActionFound = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
@@ -227,12 +281,37 @@ public class MainActivity extends AppCompatActivity {
                 // Xử lý thiết bị tìm thấy ở đây
                 String deviceName = device.getName();
                 String deviceHardwareAddress = device.getAddress(); // MAC address
-                if(device.getName() != null) {
+                if (device.getName() != null) {
                     listDevices.add(device.getName() + "\n" + device.getAddress());
+                    bluetoothDevices.add(device);
                 }
                 Log.d("PXH", deviceName + " - " + deviceHardwareAddress);
                 // Thêm vào ListView
                 updateListView(context, listDevices, lvShowDevice);
+            }
+        }
+    };
+
+    // How to Pair
+    BroadcastReceiver receiverActionBondStateChanged = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (BluetoothDevice.ACTION_BOND_STATE_CHANGED.equals(action)) {
+                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                // 3 cases:
+                // Case1: bonded already
+                if (device.getBondState() == BluetoothDevice.BOND_BONDED) {
+                    Log.d("PXH", "BroadcastReceiver: BOND_BONDED");
+                }
+                // Case2: creating a bond
+                if(device.getBondState() == BluetoothDevice.BOND_BONDING) {
+                    Log.d("PXH", "BroadcastReceiver: BOND_BONDING");
+                }
+                // Case3: breaking a bond
+                if(device.getBondState() == BluetoothDevice.BOND_NONE) {
+                    Log.d("PXH", "BroadcastReceiver: BOND_NONE");
+                }
             }
         }
     };
@@ -244,7 +323,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unregisterReceiver(receiver);
+        unregisterReceiver(receiverActionFound);
+        unregisterReceiver(receiverActionBondStateChanged);
     }
 
 }
