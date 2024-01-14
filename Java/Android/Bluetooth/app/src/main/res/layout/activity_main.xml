@@ -59,10 +59,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Bluetooth: đang chờ quét"
-        android:textSize="20sp"
-        android:id="@+id/tvStatusScan"
-        android:visibility="gone"/>
+        android:text="Quét Bluetooth: Không"
+        android:textSize="15sp"
+        android:layout_margin="15dp"
+        android:id="@+id/tvStatusScan"/>
 
     <ListView
         android:layout_width="match_parent"

@@ -13,8 +13,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.os.Build;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -23,12 +25,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-
-import android.os.Handler;
-import android.os.Looper;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -82,27 +78,21 @@ public class MainActivity extends AppCompatActivity {
         // Yêu cầu các quyền
         checkAndrequestPermissions();
 
-        // Bật Bluetooth
-        onBluetooth();
-
-        // Tắt Bluetooth
-        offBluetooth();
-
         // Mở quét Bluetooth
-        btnOpenScanBluetooth.setEnabled(false);
         // openScanBluetooth();
 
         // Quét Bluetooth
         scanBluetooth();
 
-    }
-
-
-    // Bật Bluetooth
-    private void onBluetooth() {
+        // Bật Bluetooth
         btnOnBluetooth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!hasPermission(MainActivity.this, Manifest.permission.BLUETOOTH_CONNECT)) {
+                    checkAndrequestPermission(Manifest.permission.BLUETOOTH_CONNECT);
+                    return;
+                }
+
                 if(bluetoothAdapter == null) {
                     Toast.makeText(MainActivity.this, "Bluetooth không hỗ trợ thiết bị này", Toast.LENGTH_LONG).show();
                 }
@@ -117,13 +107,16 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-    }
 
-    // Tắt Bluetooth
-    private void offBluetooth() {
+        // Tắt Bluetooth
         btnOffBluetooth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!hasPermission(MainActivity.this, Manifest.permission.BLUETOOTH_CONNECT)) {
+                    checkAndrequestPermission(Manifest.permission.BLUETOOTH_CONNECT);
+                    return;
+                }
+
                 if(bluetoothAdapter == null) {
                     Toast.makeText(MainActivity.this, "Bluetooth không hỗ trợ thiết bị này", Toast.LENGTH_LONG).show();
                 }
@@ -138,7 +131,73 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        // Bắt đầu kiểm tra trạng thái Bluetooth
+        handlerCheckBluetoothState.postDelayed(checkBluetoothState, 0);
+        // Bắt đầu kiểm tra trạng thái quét Bluetooth
+        handlerCheckScanBluetooth.postDelayed(checkScanBluetooth, 0);
     }
+
+    // Kiểm tra trạng thái liên tục của Bluetooth
+    private Handler handlerCheckBluetoothState = new Handler();
+
+    private Runnable checkBluetoothState = new Runnable() {
+        @Override
+        public void run() {
+            if (bluetoothAdapter != null) {
+                if (bluetoothAdapter.isEnabled()) {
+                    btnOnBluetooth.setEnabled(false);
+                    btnOffBluetooth.setEnabled(true);
+                    btnOpenScanBluetooth.setEnabled(false);
+
+                    // Vừa bật vừa quét
+                    if(hasPermission(MainActivity.this, Manifest.permission.BLUETOOTH_SCAN)
+                            || hasPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
+                            || hasPermission(MainActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION)) {
+                        if (bluetoothAdapter.isDiscovering()) {
+                            btnScanBluetooth.setEnabled(false);
+                        } else {
+                            btnScanBluetooth.setEnabled(true);
+                        }
+                    }
+
+                } else {
+                    btnOnBluetooth.setEnabled(true);
+                    btnOffBluetooth.setEnabled(false);
+                    btnOpenScanBluetooth.setEnabled(false);
+                    btnScanBluetooth.setEnabled(false);
+
+                    // Tắt quét Bluetooth
+                    bluetoothAdapter.cancelDiscovery();
+                }
+            }
+            handlerCheckBluetoothState.postDelayed(this, 0); // Kiểm tra lại sau 0 giây
+        }
+    };
+
+    // Kiểm tra trạng thái liên tục quét của Bluetooth
+    private Handler handlerCheckScanBluetooth = new Handler();
+
+    private Runnable checkScanBluetooth = new Runnable() {
+        @Override
+        public void run() {
+            if (bluetoothAdapter != null) {
+                if(hasPermission(MainActivity.this, Manifest.permission.BLUETOOTH_SCAN)
+                        || hasPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
+                        || hasPermission(MainActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION)) {
+                    if (bluetoothAdapter.isDiscovering()) {
+                        btnScanBluetooth.setEnabled(false);
+                        tvStatusScan.setText("Quét Bluetooth: Đang");
+                    } else {
+                        btnScanBluetooth.setEnabled(true);
+                        tvStatusScan.setText("Quét Bluetooth: Không");
+                    }
+                }
+            }
+            handlerCheckScanBluetooth.postDelayed(this, 0);
+        }
+    };
+
 
     // Mở quét Bluetooth
     private void openScanBluetooth() {
@@ -161,6 +220,11 @@ public class MainActivity extends AppCompatActivity {
         btnScanBluetooth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!hasPermission(MainActivity.this, Manifest.permission.BLUETOOTH_SCAN)) {
+                    checkAndrequestPermission(Manifest.permission.BLUETOOTH_SCAN);
+                    return;
+                }
+
                 // Quét lại từ đầu
                 bluetoothDevices.clear();
 
@@ -277,6 +341,30 @@ public class MainActivity extends AppCompatActivity {
         unregisterReceiver(broadcastReceiverActionScanModeChanged);
         // Huỷ BroadcastReceiver của ACTION_FOUND
         unregisterReceiver(broadcastReceiverActionFound);
+
+        // Huỷ handler checkBluetoothState
+        handlerCheckBluetoothState.removeCallbacks(checkBluetoothState);
+    }
+
+    // Kiểm tra yêu cầu quyền có chưa
+    private boolean hasPermission(Context context, String PERMISSION) {
+
+        if (context != null && PERMISSION != null) {
+
+            if (ActivityCompat.checkSelfPermission(context, PERMISSION) != PackageManager.PERMISSION_GRANTED) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    // Yêu cầu quyền
+    private void checkAndrequestPermission(String PERMISSION) {
+        if (!hasPermission(MainActivity.this, PERMISSION)) {
+
+            ActivityCompat.requestPermissions(MainActivity.this, new String[] { PERMISSION }, REQUEST_CODE_PERMISSION);
+        }
     }
 
     // Kiểm tra yêu cầu các quyền có chưa
@@ -311,12 +399,11 @@ public class MainActivity extends AppCompatActivity {
 
             for (int i = 0; i < grantResults.length; ++i) {
                 if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(MainActivity.this, permissions[i].replace("Manifest.permission.", "") + " đã cho phép", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, permissions[i].replaceAll("android.permission.", "") + " đã cho phép", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(MainActivity.this, permissions[i].replace("Manifest.permission.", "") + " bị không cho phép", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, permissions[i].replaceAll("android.permission.", "") + " không cho phép", Toast.LENGTH_SHORT).show();
                 }
             }
         }
     }
-
 }
