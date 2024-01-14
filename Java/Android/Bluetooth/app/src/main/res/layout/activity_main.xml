@@ -40,8 +40,9 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Mở Quét Bluetooth"
-            android:id="@+id/btnOpenScanBluetooth"/>
+            android:text="Mở Quét"
+            android:id="@+id/btnOpenScanBluetooth"
+            android:enabled="true"/>
 
         <View
             android:layout_width="0dp"
@@ -51,22 +52,108 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Quét Bluetooth"
-            android:id="@+id/btnScanBluetooth"/>
+            android:text="Quét"
+            android:id="@+id/btnScanBluetooth"
+            android:enabled="true"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="(Quét, Nghe)"
+            android:id="@+id/btnTestOpenScanBluetooth"
+            android:enabled="true"/>
 
     </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Quét Bluetooth: Không"
-        android:textSize="15sp"
-        android:layout_margin="15dp"
-        android:id="@+id/tvStatusScan"/>
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Quét Bluetooth: Không"
+            android:textSize="15sp"
+            android:layout_margin="15dp"
+            android:id="@+id/tvStatusScan"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/tvStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chưa kết nối"
+            android:layout_margin="15sp"
+            android:paddingRight="50dp"
+            android:textStyle="italic" />
+
+    </LinearLayout>
+
+
 
     <ListView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="200sp"
         android:id="@+id/lvShowDevices"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvMSG"
+            android:layout_width="match_parent"
+            android:layout_height="280sp"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:hint="Tin nhắn"
+            android:textAlignment="center"
+            android:textSize="30sp"
+            android:textStyle="italic" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/etMSG"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/btnSend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Gửi" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
 
 </LinearLayout>
