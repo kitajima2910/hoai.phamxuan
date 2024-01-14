@@ -23,6 +23,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -31,10 +34,16 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "Kitajima-" + MainActivity.class.getSimpleName();
 
-    // Khai báo các request code cho các permission
-    private static final int REQUEST_CODE_BLUETOOTH_CONNECT_PERMISSION = 1;
-    private static final int REQUEST_CODE_BLUETOOTH_SCAN_PERMISSION = 2;
-    private static final int REQUEST_CODE_ACCESS_FINE_LOCATION_PERMISSION = 3;
+    // Lấy danh sách các quyền cần yêu cầu
+    private static final String[] PERMISSIONS = new String[]{
+            Manifest.permission.BLUETOOTH_CONNECT,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.BLUETOOTH_SCAN
+    };
+
+    // Tạo request code cho permission
+    private static final int REQUEST_CODE_PERMISSION = 1;
 
     // Khai báo các components
     private Button btnOnBluetooth;
@@ -71,8 +80,7 @@ public class MainActivity extends AppCompatActivity {
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
         // Yêu cầu các quyền
-//        checkBTPermissions();
-        requestBluetoothConnectPermission();
+        checkAndrequestPermissions();
 
         // Bật Bluetooth
         onBluetooth();
@@ -82,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Mở quét Bluetooth
         btnOpenScanBluetooth.setEnabled(false);
-//        openScanBluetooth();
+        // openScanBluetooth();
 
         // Quét Bluetooth
         scanBluetooth();
@@ -156,26 +164,13 @@ public class MainActivity extends AppCompatActivity {
                 // Quét lại từ đầu
                 bluetoothDevices.clear();
 
-                // Mở quét Bluetooth
-//                {
-//                    Log.d(TAG, "scanBluetooth: Làm cho thiết bị có thể được phát hiện trong 300 giây.");
-//
-//                    Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
-//                    intent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
-//                    startActivity(intent);
-//
-//                    IntentFilter intentFilter = new IntentFilter(BluetoothAdapter.ACTION_SCAN_MODE_CHANGED);
-//                    registerReceiver(broadcastReceiverActionScanModeChanged, intentFilter);
-//                }
-
                 Log.d(TAG, "scanBluetooth: đang tìm kiếm các thiết bị xung quanh");
                 if(bluetoothAdapter.isDiscovering()) {
                     bluetoothAdapter.cancelDiscovery();
                     Log.d(TAG, "scanBluetooth: huỷ trước khi quét tiếp");
 
                     // Kiểm tra xem có quyền quét chưa
-//                    checkBTPermissions();
-//                    requestBluetoothConnectPermission();
+                    checkAndrequestPermissions();
 
                     bluetoothAdapter.startDiscovery();
                     IntentFilter intentFilter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
@@ -185,8 +180,7 @@ public class MainActivity extends AppCompatActivity {
                 if(!bluetoothAdapter.isDiscovering()) {
 
                     // Kiểm tra xem có quyền quét chưa
-//                    checkBTPermissions();
-//                    requestBluetoothConnectPermission();
+                    checkAndrequestPermissions();
 
                     bluetoothAdapter.startDiscovery();
                     IntentFilter intentFilter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
@@ -285,24 +279,27 @@ public class MainActivity extends AppCompatActivity {
         unregisterReceiver(broadcastReceiverActionFound);
     }
 
-    // Yêu cầu quyền Bluetooth connect
-    private void requestBluetoothConnectPermission() {
-        if(ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(MainActivity.this, new String[]{ android.Manifest.permission.BLUETOOTH_CONNECT }, REQUEST_CODE_BLUETOOTH_CONNECT_PERMISSION);
+    // Kiểm tra yêu cầu các quyền có chưa
+    private boolean hasPermissions(Context context, String... PERMISSIONS) {
+
+        if (context != null && PERMISSIONS != null) {
+
+            for (String permission: PERMISSIONS){
+
+                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+                    return false;
+                }
+            }
         }
+
+        return true;
     }
 
-    // Yêu cầu quyền Bluetooth scan
-    private void requestBluetoothScanPermission() {
-        if(ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(MainActivity.this, new String[]{ android.Manifest.permission.BLUETOOTH_SCAN }, REQUEST_CODE_BLUETOOTH_SCAN_PERMISSION);
-        }
-    }
+    // Yêu cầu các quyền
+    private void checkAndrequestPermissions() {
+        if (!hasPermissions(MainActivity.this, PERMISSIONS)) {
 
-    // Yêu cầu quyền Bluetooth scan permission
-    private void requestAccessFineLocationPermission() {
-        if(ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(MainActivity.this, new String[]{ Manifest.permission.ACCESS_FINE_LOCATION }, REQUEST_CODE_ACCESS_FINE_LOCATION_PERMISSION);
+            ActivityCompat.requestPermissions(MainActivity.this, PERMISSIONS, REQUEST_CODE_PERMISSION);
         }
     }
 
@@ -310,38 +307,15 @@ public class MainActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            switch (requestCode) {
-                case REQUEST_CODE_BLUETOOTH_CONNECT_PERMISSION:
-                    requestAccessFineLocationPermission();
-                    break;
-                case REQUEST_CODE_ACCESS_FINE_LOCATION_PERMISSION:
-                    requestBluetoothScanPermission();
-                    break;
-                case REQUEST_CODE_BLUETOOTH_SCAN_PERMISSION:
-                    requestBluetoothConnectPermission();
-                    break;
-            }
-        }
-    }
+        if (requestCode == REQUEST_CODE_PERMISSION) {
 
-    /**
-     * This method is required for all devices running API23+
-     * Android must programmatically check the permissions for bluetooth. Putting the proper permissions
-     * in the manifest is not enough.
-     *
-     * NOTE: This will only execute on versions > LOLLIPOP because it is not needed otherwise.
-     */
-    private void checkBTPermissions() {
-        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP){
-            int permissionCheck = this.checkSelfPermission("Manifest.permission.ACCESS_FINE_LOCATION");
-            permissionCheck += this.checkSelfPermission("Manifest.permission.ACCESS_COARSE_LOCATION");
-            if (permissionCheck != 0) {
-
-                this.requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1001); //Any number
+            for (int i = 0; i < grantResults.length; ++i) {
+                if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(MainActivity.this, permissions[i].replace("Manifest.permission.", "") + " đã cho phép", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(MainActivity.this, permissions[i].replace("Manifest.permission.", "") + " bị không cho phép", Toast.LENGTH_SHORT).show();
+                }
             }
-        }else{
-            Log.d(TAG, "checkBTPermissions: Không cần kiểm tra quyền. SDK version < LOLLIPOP.");
         }
     }
 
