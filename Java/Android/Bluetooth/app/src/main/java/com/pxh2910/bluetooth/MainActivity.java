@@ -247,12 +247,10 @@ public class MainActivity extends AppCompatActivity {
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String msg = String.valueOf(etMSG.getText());
-                Log.d(TAG, "btnSend msg: " + msg);
 
+                String msg = String.valueOf(etMSG.getText());
             }
         });
-
 
 
         // Bắt đầu kiểm tra trạng thái Bluetooth
