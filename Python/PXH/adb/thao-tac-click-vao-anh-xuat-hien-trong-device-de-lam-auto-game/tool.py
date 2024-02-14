@@ -47,24 +47,20 @@ class Starts(threading.Thread):
         def LDStore(device: Auto):
             while True:
                 try:
+                    # Nhấp vào biểu tượng LD Store
                     imgLDStore = device.find("LD_Store.png")
                     if imgLDStore > [(0, 0)]:
                         device.click(imgLDStore[0][0], imgLDStore[0][1])
                         print(" \033[1;31m |\033[1;37m[", self.nameLD ,"]\033[1;31m Da nhap vao 'LD Store' | Time:", time.ctime(time.time()))
-                        Pre_Register(device)
-                except:
-                    return 0
-
-        def Pre_Register(device: Auto):
-            while True:
-                try:
+                    
+                    # Nhấp vào tab Pre-Register
                     imgPre_Register = device.find("Pre_Register.png")
                     if imgPre_Register > [(0, 0)]:
                         device.click(imgPre_Register[0][0], imgPre_Register[0][1])
                         print(" \033[1;31m |\033[1;37m[", self.nameLD ,"]\033[1;31m Da nhap vao 'Pre-Register' | Time:", time.ctime(time.time()))
                 except:
                     return 0
-
+                
         LDStore(device)
         
 def GetDevices():
@@ -84,6 +80,7 @@ def main(m):
     device = GetDevices()[m]
     run = Starts(device, device, )
     run.run()
-                
+        
 for m in range(thread_count):
-    threading.Thread(target=main, args=(m, )).start()    
+    threading.Thread(target=main, args=(m, )).start()
+    
