@@ -20,6 +20,15 @@ class Auto:
         
     def click(self, x, y):
         os.system(f'adb -s {self.handle} shell input tap {x} {y}')
+            
+    def sendText(self, text):
+        os.system(f'adb -s {self.handle} shell input text {text}')
+        
+    def home(self):
+        os.system(f'adb -s {self.handle} shell input keyevent 3')
+    
+    def enter(self):
+        os.system(f'adb -s {self.handle} shell input keyevent 66')
         
     def find(self, img = "", template_pic_name = False, threshold = 0.99):
         if template_pic_name == False:
