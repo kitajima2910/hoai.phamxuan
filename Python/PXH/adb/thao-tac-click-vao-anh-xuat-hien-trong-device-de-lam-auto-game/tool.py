@@ -16,6 +16,8 @@ class Auto:
         self.handle = handle
         
     def screen_capture(self, name):
+        # Chờ 0.5s để thực hiện chụp ảnh màn hình
+        time.sleep(0.5)
         os.system(f'adb -s {self.handle} exec-out screencap -p > {name}.png')
         
     def click(self, x, y):
@@ -63,14 +65,46 @@ class Starts(threading.Thread):
                         print(" \033[1;31m |\033[1;37m[", self.nameLD ,"]\033[1;31m Da nhap vao 'LD Store' | Time:", time.ctime(time.time()))
                     
                     # Nhấp vào tab Pre-Register
-                    imgPre_Register = device.find("Pre_Register.png")
+                    imgPre_Register = device.find("Pre_register.png")
+                    print("imgPre_Register: ", imgPre_Register)
                     if imgPre_Register > [(0, 0)]:
                         device.click(imgPre_Register[0][0], imgPre_Register[0][1])
                         print(" \033[1;31m |\033[1;37m[", self.nameLD ,"]\033[1;31m Da nhap vao 'Pre-Register' | Time:", time.ctime(time.time()))
                 except:
                     return 0
-                
-        LDStore(device)
+        
+        def searchGames(device: Auto):
+            
+            # Đọc file txt
+            with open("text.txt", "r", encoding="utf8") as f:
+                listText = f.read().splitlines()
+            
+            while True:
+                try:
+                    # Nhấp vào biểu tượng Search Games
+                    imgSearchGames = device.find("Search-games.png")
+                    if imgSearchGames > [(0, 0)]:
+                        device.click(imgSearchGames[0][0], imgSearchGames[0][1])
+                        print(" \033[1;31m |\033[1;37m[", self.nameLD ,"]\033[1;31m Da nhap vao 'Search games' | Time:", time.ctime(time.time()))
+                        
+                    # Nhấp vào biểu tượng Search for Apps or Games
+                    imgSearchAppsOrGames = device.find("Search-for-apps-or-games.png")
+                    if imgSearchAppsOrGames > [(0, 0)]:
+                        device.click(imgSearchAppsOrGames[0][0], imgSearchAppsOrGames[0][1])
+                        print(" \033[1;31m |\033[1;37m[", self.nameLD ,"]\033[1;31m Da nhap vao 'Search for apps or games' | Time:", time.ctime(time.time()))
+                        
+                        # Chọn dòng ngẫu nhiên
+                        line = random.choice(listText)
+                        device.sendText(line)
+                        print(" \033[1;31m |\033[1;37m[", self.nameLD ,"]\033[1;31m Da nhap vao '", line,"' | Time:", time.ctime(time.time()))
+                        
+                        device.enter()
+                        print(" \033[1;31m |\033[1;37m[", self.nameLD ,"]\033[1;31m Da nhap vao 'Enter' | Time:", time.ctime(time.time()))
+                except:
+                    return 0
+        
+        # LDStore(device)
+        searchGames(device)
         
 def GetDevices():
         devices = subprocess.check_output("adb devices")
