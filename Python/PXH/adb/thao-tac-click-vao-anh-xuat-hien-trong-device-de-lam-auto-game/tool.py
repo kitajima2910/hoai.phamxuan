@@ -17,7 +17,7 @@ class Auto:
         
     def screen_capture(self, name):
         # Chờ 0.5s để thực hiện chụp ảnh màn hình
-        time.sleep(0.5)
+        time.sleep(.5)
         os.system(f'adb -s {self.handle} exec-out screencap -p > {name}.png')
         
     def click(self, x, y):
@@ -31,6 +31,9 @@ class Auto:
     
     def enter(self):
         os.system(f'adb -s {self.handle} shell input keyevent 66')
+        
+    def swipe(self, x1, y1, x2, y2):
+        os.system(f'adb -s {self.handle} shell input swipe {x1} {y1} {x2} {y2} 1000')
         
     def find(self, img = "", template_pic_name = False, threshold = 0.99):
         if template_pic_name == False:
@@ -47,10 +50,11 @@ class Auto:
         return test_data
 
 class Starts(threading.Thread):
-    def __init__(self, nameLD, i):
+    def __init__(self, nameLD, i, account):
         super().__init__()
         self.nameLD = nameLD
         self.device = i
+        self.account = account
         
     def run(self):
         device = Auto(self.device)
@@ -103,8 +107,124 @@ class Starts(threading.Thread):
                 except:
                     return 0
         
+        def testSwipe(device: Auto):
+            while True:
+                try:
+                    # Vuốt lên
+                    device.swipe(257.0, 688.6, 253.1, 338.2)
+                except:
+                    return 0
+        
+        def zingID(device: Auto):
+            while True:
+                try:
+                    acc = self.account.split(" | ")
+                    username = acc[0]
+                    password = acc[1]
+                    
+                    # Nhấp vào System Apps
+                    imgSystemApps = device.find("System_Apps.png")
+                    if imgSystemApps > [(0, 0)]:
+                        device.click(imgSystemApps[0][0], imgSystemApps[0][1])
+                        print(" \033[1;31m |\033[1;37m[", self.nameLD ,"]\033[1;31m Nhap vao 'System Apps' | Time:", time.ctime(time.time()))
+                    
+                    # Nhấp vào Browser
+                    imgBrowser = device.find("Browser.png")
+                    if imgBrowser > [(0, 0)]:
+                        device.click(imgBrowser[0][0], imgBrowser[0][1])
+                        print(" \033[1;31m |\033[1;37m[", self.nameLD ,"]\033[1;31m Nhap vao 'Browser' | Time:", time.ctime(time.time()))
+                        
+                    # Nhấp vào Search Google
+                    imgSearchGoogle = device.find("Search-google.png")
+                    if imgSearchGoogle > [(0, 0)]:
+                        device.click(imgSearchGoogle[0][0], imgSearchGoogle[0][1])
+                        print(" \033[1;31m |\033[1;37m[", self.nameLD ,"]\033[1;31m Nhap vao 'Search Google' | Time:", time.ctime(time.time()))
+                        
+                        # Ghi text "zing id login"
+                        device.sendText("zing\ id\ login")
+                        print(" \033[1;31m |\033[1;37m[", self.nameLD ,"]\033[1;31m Nhap 'zing id login' | Time:", time.ctime(time.time()))
+                        
+                        device.enter()
+                        print(" \033[1;31m |\033[1;37m[", self.nameLD ,"]\033[1;31m Nhan 'enter' | Time:", time.ctime(time.time()))
+                    
+                    # Enter khi đã nhập "zing id login"
+                    imgTextZingIDLogin = device.find("Zing-id-login.PNG")
+                    if imgTextZingIDLogin > [(0, 0)]:
+                        device.enter()
+                        print(" \033[1;31m |\033[1;37m[", self.nameLD ,"]\033[1;31m Nhap vao 'enter' | Time:", time.ctime(time.time()))
+                    
+                    
+                    # Nhấp vào URL "Zing ID"
+                    imgURLZingIDLogin = device.find("Zing-ID-URL.PNG")
+                    if imgURLZingIDLogin > [(0, 0)]:
+                        device.click(imgURLZingIDLogin[0][0], imgURLZingIDLogin[0][1])
+                        print(" \033[1;31m |\033[1;37m[", self.nameLD ,"]\033[1;31m Nhap vao 'URL Zing ID' | Time:", time.ctime(time.time()))
+                    
+                    # Nhập USER
+                    imgUSER = device.find("USER.PNG")
+                    if imgUSER > [(0, 0)]:
+                        device.click(imgUSER[0][0], imgUSER[0][1])
+                        print(" \033[1;31m |\033[1;37m[", self.nameLD ,"]\033[1;31m Nhap vao 'USER' | Time:", time.ctime(time.time()))
+                        
+                        device.sendText(username)
+                        print(" \033[1;31m |\033[1;37m[", self.nameLD ,"]\033[1;31m Nhap vao '", username,"' | Time:", time.ctime(time.time()))
+                    else:
+                        # Nhập PASS
+                        imgPASS = device.find("PASS.PNG")
+                        if imgPASS > [(0, 0)]:
+                            device.click(imgPASS[0][0], imgPASS[0][1])
+                            print(" \033[1;31m |\033[1;37m[", self.nameLD ,"]\033[1;31m Nhap vao 'PASS' | Time:", time.ctime(time.time()))
+                            
+                            device.sendText(password)
+                            print(" \033[1;31m |\033[1;37m[", self.nameLD ,"]\033[1;31m Nhap vao '", password,"' | Time:", time.ctime(time.time()))
+                    
+                    # Nhập PASSED
+                    imgPASSED = device.find("PASSED.PNG")
+                    if imgPASSED > [(0, 0)]:
+                        print(" \033[1;31m |\033[1;37m[", self.nameLD ,"]\033[1;31m Nhap vao 'PASSED' | Time:", time.ctime(time.time()))
+                        
+                        imgLogin = device.find("Login.PNG")
+                        if imgLogin > [(0, 0)]:
+                            device.click(imgLogin[0][0], imgLogin[0][1])
+                            print(" \033[1;31m |\033[1;37m[", self.nameLD ,"]\033[1;31m Nhap vao 'Login' | Time:", time.ctime(time.time()))
+                            
+                            time.sleep(.3)
+                            imgWORNGUSERPASS = device.find("WORNG-USER-PASS.PNG")
+                            if imgWORNGUSERPASS > [(0, 0)]:
+                                with open("list_tk_sai.txt", "a", encoding="utf8") as f:
+                                    f.write("{} | {}\n".format(username, password))
+                                print(" \033[1;31m |\033[1;37m[", self.nameLD ,"]\033[1;31m Viet vao file list_tk_sai.txt | Time:", time.ctime(time.time()))
+                                
+                                time.sleep(.3)
+                                imgURLID = device.find("url_id.PNG")
+                                if imgLogin > [(0, 0)]:
+                                    device.click(imgURLID[0][0], imgURLID[0][1])
+                                    print(" \033[1;31m |\033[1;37m[", self.nameLD ,"]\033[1;31m Nhap vao 'url id.zing.vn' | Time:", time.ctime(time.time()))
+                                    
+                                    device.sendText("https://id.zing.vn/")
+                                    print(" \033[1;31m |\033[1;37m[", self.nameLD ,"]\033[1;31m Nhap vao 'https://id.zing.vn/' | Time:", time.ctime(time.time()))
+                                    
+                                    device.enter()
+                                    print(" \033[1;31m |\033[1;37m[", self.nameLD ,"]\033[1;31m Nhap vao 'enter' | Time:", time.ctime(time.time()))
+                                break
+                            else:
+                                time.sleep(.3)
+                                imgExit = device.find("Exit.PNG")
+                                if imgExit > [(0, 0)]:
+                                    with open("list_tk_dung.txt", "a", encoding="utf8") as f:
+                                        f.write("{} | {}\n".format(username, password))
+                                    print(" \033[1;31m |\033[1;37m[", self.nameLD ,"]\033[1;31m Viet vao file list_tk_dung.txt | Time:", time.ctime(time.time()))
+                                
+                                    device.click(imgExit[0][0], imgExit[0][1])
+                                    print(" \033[1;31m |\033[1;37m[", self.nameLD ,"]\033[1;31m Nhap vao 'Thoat' | Time:", time.ctime(time.time()))
+                                    break 
+                except:
+                    return 0
+        
         # LDStore(device)
-        searchGames(device)
+        # searchGames(device)
+        # testSwipe(device)
+        zingID(device)
         
 def GetDevices():
         devices = subprocess.check_output("adb devices")
@@ -119,10 +239,17 @@ def GetDevices():
 GetDevices()
 thread_count = len(GetDevices())
 
+# Lấy data tài khoản từ file list_tk.txt
+with open("list_tk.txt", "r", encoding="utf8") as f:
+    accounts = f.read().splitlines()
+print("PXH: ", accounts, " - : ", len(accounts))
+
 def main(m):
     device = GetDevices()[m]
-    run = Starts(device, device, )
-    run.run()
+    for i in range(len(accounts)):
+        account = accounts[i]
+        run = Starts(device, device, account)
+        run.run()
         
 for m in range(thread_count):
     threading.Thread(target=main, args=(m, )).start()
